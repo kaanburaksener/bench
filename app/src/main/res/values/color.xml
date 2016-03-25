@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#32b846</color>
+    <color name="color_primary_dark">#2da43e</color>
+    <color name="accent">#8BC34A</color>
+    <color name="background_main">#e1e6ea</color>
+    <color name="primary_text">#323c46</color>
+    <color name="secondary_text">#8c96a0</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#8c96a0</color>
+    <color name="primary_button">#32b846</color>
+    <color name="primary_button_text">#FFFFFF</color>
+    <color name="secondary_button">#E6A922</color>
+    <color name="secondary_button_text">#FFFFFF</color>
+    <color name="logo_primary">#32b846</color>
+    <color name="logo_secondary">#FFFFFF</color>
+    <color name="form_background_color">#FFFFFF</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#FFFFFF</color>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/pre-dexed/debug/classes-e97832bdcc6608aa94adb66291a1f7928ec9e251.jar" />
+    </item>
+    <item
+        jar="/Users/kaanburaksener/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-427eb523493912707e5266f33d1f267e9f603e48.jar" />
+    </item>
+    <item
+        jar="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/jars/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/pre-dexed/debug/classes-69cb3aaa1137d5a1d6bcdb26b6a7b34322b420f5.jar" />
+    </item>
+    <item
+        jar="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/jars/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/pre-dexed/debug/classes-969d9dafe16581c166bf6e149191e58536ee2157.jar" />
+    </item>
+    <item
+        jar="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/pre-dexed/debug/classes-04ac83b7e69ea311c56cfd83b96a54ed635aa759.jar" />
+    </item>
+    <item
+        jar="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/kaanburaksener/GitHub/bench/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-36c9bc57804d808f3734dabf954e2bf09cbe5280.jar" />
+    </item>
+
+</items>
