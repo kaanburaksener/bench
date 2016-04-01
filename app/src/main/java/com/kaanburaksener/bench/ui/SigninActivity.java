@@ -1,30 +1,47 @@
 package com.kaanburaksener.bench.ui;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Build;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.view.View;
-import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.kaanburaksener.bench.MainActivity;
 import com.kaanburaksener.bench.R;
+import com.kaanburaksener.bench.json.JSONParser;
 
 /**
  * Created by kaanburaksener on 24/03/16.
  */
 public class SigninActivity extends AppCompatActivity {
     private TextView appName;
-    private EditText email;
-    private EditText password;
+    private EditText emailET;
+    private EditText passwordET;
+    private String email;
+    private String password;
+    private ProgressDialog pDialog;
+    private JSONParser jsonParser;
+    private static String url_signin_user = "http://bench-kaanburaksener.rhcloud.com/signin_user.php";
+    private static final String TAG_SUCCESS = "success";// JSON Node names
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +54,10 @@ public class SigninActivity extends AppCompatActivity {
      * This function is used to initialize the layout elements and the attributes of the class
      */
     private void initializer() {
-        appName = (TextView)findViewById(R.id.appName);
-        email = (EditText)findViewById(R.id.email);
-        password = (EditText)findViewById(R.id.password);
+        jsonParser = new JSONParser();
+        appName = (TextView) findViewById(R.id.appName);
+        emailET = (EditText) findViewById(R.id.email);
+        passwordET = (EditText) findViewById(R.id.password);
         setFont();
         setStatusBarColor();
     }
@@ -66,30 +84,6 @@ public class SigninActivity extends AppCompatActivity {
         appName.setTypeface(typeface);
     }
 
-    /**
-     * This function is used to check the validity of entered data from sign in form
-     */
-    private boolean checkSigninForm() {
-        boolean result = true;
-
-        if (TextUtils.isEmpty(email.getText()) || !isEmailValid(email.getText().toString())) {
-            result = false;
-            Toast.makeText(getApplicationContext(), R.string.email_error, Toast.LENGTH_LONG).show();
-
-        } else if (TextUtils.isEmpty(password.getText()) || password.getText().length() < 8 || password.getText().length() > 32) {
-            result = false;
-            Toast.makeText(getApplicationContext(), R.string.password_error, Toast.LENGTH_LONG).show();
-        }
-
-        return result;
-    }
-
-    /**
-     * This function is used to sends the register forms
-     */
-    public void sendForm(View view) {
-
-    }
 
     /**
      * This function is used to redirect the user to sign up page
@@ -98,6 +92,18 @@ public class SigninActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * This function is used to set font to the layout elements
+     */
+    public void sendForm(View view) {
+        this.email = emailET.getText().toString();
+        this.password = passwordET.getText().toString();
+
+        if(isEmailValid(email)) {
+            new SigninUser().execute();
+        }
     }
 
     /**
@@ -121,6 +127,62 @@ public class SigninActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d("Destroy", "Activity Gone");
         super.onDestroy();
+    }
+
+    /**
+     * Background Async Task to Create new product
+     */
+    class SigninUser extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(SigninActivity.this);
+            pDialog.setMessage("Sign in..");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        /**
+         * Creating product
+         */
+        protected String doInBackground(String... args) {
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("email", email));
+            params.add(new BasicNameValuePair("password", password));
+
+            JSONObject json = jsonParser.makeHttpRequest(url_signin_user, "POST", params);
+
+            // check log cat fro response
+            Log.d("Create Response", json.toString());
+
+            // check for success tag
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+
+                if (success == 1) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                    finish();
+                } else {
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(String file_url) {
+            pDialog.dismiss();
+        }
+
     }
 
 }

@@ -18,7 +18,6 @@
             android:src="@drawable/signin_bg2" />
 
         <LinearLayout
-            android:id="@+id/LinearLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
@@ -146,7 +145,7 @@
         android:paddingRight="16dp">
 
         <Button
-            android:id="@+id/signinButton"
+            android:id="@+id/signupButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/signin_button"
