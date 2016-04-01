@@ -1,37 +1,33 @@
 package com.kaanburaksener.bench.core;
 
-import java.util.Date;
-
 /**
  * Created by kaanburaksener on 26/03/16.
  */
 public class User {
+    private int id;
     private String name;
     private String email;
     private String password;
     private String phoneNumber;
-    private String city;
-    private Date birthday;
+    private String location;
+    private String birthday;
+    private String createdAt;
 
-    /**
-     * sign up constructor
-     */
-    public User(String name, String email, String password){
+    public User(int id, String name, String email, String location, String birthday, String createdAt){
+        this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.location = location;
+        this.birthday = birthday;
+        this.createdAt = createdAt;
     }
 
-    /**
-     * sign in constructor
-     */
-    public User(String name, String email, String password, String phoneNumber, String city, Date birthday){
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.city = city;
-        this.birthday =birthday;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -66,19 +62,27 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

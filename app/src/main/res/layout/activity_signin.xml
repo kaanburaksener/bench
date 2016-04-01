@@ -126,7 +126,6 @@
             android:background="@drawable/signin_button"
             android:elevation="1dp"
             android:layout_weight="1"
-            android:onClick="sendForm"
             android:text="@string/signin"
             android:textColor="@color/primary_button_text"
             android:textAllCaps="false"
