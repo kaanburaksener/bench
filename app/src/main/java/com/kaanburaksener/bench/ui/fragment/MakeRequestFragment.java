@@ -19,4 +19,21 @@ import java.util.Locale;
  * Created by kaanburaksener on 31/03/16.
  */
 public class MakeRequestFragment extends Fragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_make_request,container,false);
+
+        return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

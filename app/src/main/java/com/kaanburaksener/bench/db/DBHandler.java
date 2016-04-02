@@ -7,11 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-
 import com.kaanburaksener.bench.core.User;
 
 /**
@@ -37,8 +32,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        //Create table statements
+        //Create User table statement
         String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + USER_TABLE_NAME + "(" +
                 USER_COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 USER_COLUMN_NAME + " TEXT, " +
@@ -48,7 +42,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 USER_COLUMN_BIRTHDAY + " TEXT, " +
                 USER_COLUMN_CREATED_AT + " TEXT);";
 
-        //Create Tables
+        //Create the Table
         db.execSQL(CREATE_USER_TABLE);
     }
 
@@ -56,7 +50,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     /**
-     * Add a user from register page
+     * This method is used to add a new user on first registration step
      */
 
     public void addUser(String id, String name, String email, String createdAt) {
@@ -72,6 +66,10 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * This method is used to add a new user on after user updates its data
+     */
+
     public void addUser(String id, String name, String email, String location, String birthday, String createdAt) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -86,6 +84,10 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(USER_TABLE_NAME, null, contentValues);
         db.close();
     }
+
+    /**
+     * This method is used to get the user as an object of the user class
+     */
 
     public User getUser(int id){
         User user;
@@ -103,13 +105,15 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Checks for the user
+     * This method is used to check is there any existed user in the user table
      */
 
     public boolean hasUser() {
         boolean result = false;
+
         String selectQuery = "SELECT * FROM " + USER_TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
+
         Cursor cursor = db.rawQuery(selectQuery, null);
         int cnt = cursor.getCount();
         cursor.close();
@@ -117,7 +121,37 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cnt >= 1) result = true;
         Log.d("CNT :", String.valueOf(cnt));
         db.close();
+
         return result;
     }
 
+    /**
+     * This method is used to get the user id
+     */
+
+    public String getUserId(){
+        String id = "";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(USER_TABLE_NAME, new String[]{USER_COLUMN_ID}, null, null, null, null, null, null);
+
+        if (c.moveToFirst()) {
+            id = c.getString(0);
+        }
+
+        c.close();
+        db.close();
+
+        return id;
+    }
+
+    /**
+     * This method is used to delete existed user in the user table for sign out
+     */
+
+    public void deleteUser(String userID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(USER_TABLE_NAME, USER_COLUMN_ID + " = ? ", new String[]{userID});
+        db.close();
+    }
 }

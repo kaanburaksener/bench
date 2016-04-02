@@ -19,4 +19,28 @@ import java.util.Locale;
  * Created by kaanburaksener on 31/03/16.
  */
 public class MyProfileFragment extends Fragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_my_profile,container,false);
+
+        return v;
+    }
+
+    /**
+     * This function is used to initialize the layout elements and the attributes of the class
+     */
+    private void initializer(View v) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

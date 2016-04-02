@@ -2,7 +2,6 @@ package com.kaanburaksener.bench.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,9 +14,6 @@ import android.text.style.ImageSpan;
 import com.kaanburaksener.bench.ui.fragment.BrowseRequestsFragment;
 import com.kaanburaksener.bench.ui.fragment.MakeRequestFragment;
 import com.kaanburaksener.bench.ui.fragment.MyProfileFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.kaanburaksener.bench.R;
 

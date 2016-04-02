@@ -17,5 +17,5 @@
     <color name="form_background_color">#FFFFFF</color>
     <color name="text_shadow">#7F000000</color>
     <color name="text_shadow_white">#FFFFFF</color>
-    <color name="tabs_scroll_color">#8BC34A</color>
+    <color name="tabs_scroll_color">#FFFFFF</color>
 </resources>

@@ -16,6 +16,9 @@ import com.kaanburaksener.bench.ui.adapter.ViewPagerAdapter;
 import com.kaanburaksener.bench.ui.SlidingTabLayout;
 
 import com.kaanburaksener.bench.R;
+import com.kaanburaksener.bench.ui.fragment.BrowseRequestsFragment;
+import com.kaanburaksener.bench.ui.fragment.MakeRequestFragment;
+import com.kaanburaksener.bench.ui.fragment.MyProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager pager;
@@ -36,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
         Intent i = getIntent();
         Bundle extras = getIntent().getExtras();
         userID = extras.getInt("user_id");
-
-        if(dbHandler.hasUser()) {
-            Toast.makeText(getApplicationContext(), "User has been created!", Toast.LENGTH_LONG).show();
-        }
-
     }
 
     /**
@@ -52,10 +50,8 @@ public class MainActivity extends AppCompatActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        toolbar.getMenu().clear();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setActionBarTitle(getString(R.string.title_browse_requests)); //First fragment title
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(), numberOftabs, this);
@@ -63,6 +59,33 @@ public class MainActivity extends AppCompatActivity {
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String currentTitle = "";
+
+                if(position == 0) {
+                    currentTitle = getString(R.string.title_browse_requests);
+                } else if(position == 1) {
+                    currentTitle = getString(R.string.title_make_request);
+                } else {
+                    currentTitle = getString(R.string.title_my_profile);
+                }
+
+                setActionBarTitle(currentTitle);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -120,5 +143,9 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         ViewServer.get(this).removeWindow(this);
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }
