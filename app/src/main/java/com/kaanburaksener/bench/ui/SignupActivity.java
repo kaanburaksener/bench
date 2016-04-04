@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import com.kaanburaksener.bench.handler.AccountHandler;
  * Created by kaanburaksener on 24/03/16.
  */
 public class SignupActivity extends AppCompatActivity {
+    private ActionBar actionBar;
     private Helper helper;
     private Button signupButton;
     private AccountHandler accountHandler;
@@ -52,9 +54,11 @@ public class SignupActivity extends AppCompatActivity {
         passwordET = (EditText) findViewById(R.id.password);
         accountHandler = new AccountHandler(this, this);
         helper = new Helper();
+        actionBar = getSupportActionBar();
 
         setFont();
         setStatusBarColor();
+        actionBar.hide(); //This command hides action bar
     }
 
     /**

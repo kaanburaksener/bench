@@ -29,6 +29,8 @@
     <string name="title_browse_requests">Browse Requests</string>
     <string name="title_make_request">Make a Request</string>
     <string name="title_my_profile">My Profile</string>
+    <string name="title_my_history">My History</string>
+    <string name="title_my_account">My Account</string>
 
     <string name="action_settings">Settings</string>
 

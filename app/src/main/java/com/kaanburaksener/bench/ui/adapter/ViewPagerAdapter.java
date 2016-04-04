@@ -6,14 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import com.kaanburaksener.bench.ui.fragment.BrowseRequestsFragment;
 import com.kaanburaksener.bench.ui.fragment.MakeRequestFragment;
-import com.kaanburaksener.bench.ui.fragment.MyProfileFragment;
+import com.kaanburaksener.bench.ui.fragment.MyAccountFragment;
 
 import com.kaanburaksener.bench.R;
 
@@ -21,7 +20,6 @@ import com.kaanburaksener.bench.R;
  * Created by kaanburaksener on 30/03/16.
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-
     Context context;
     FragmentManager fragmentManager;
     int numbOfTabs;
@@ -29,7 +27,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     final int[] ICONS = new int[] {
             R.drawable.ic_browse_requests,
             R.drawable.ic_make_request,
-            R.drawable.ic_my_profile
+            R.drawable.ic_my_account
     };
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
@@ -50,8 +48,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             MakeRequestFragment makeRequestFragment = new MakeRequestFragment();
             return makeRequestFragment;
         } else {
-            MyProfileFragment myProfileFragment = new MyProfileFragment();
-            return myProfileFragment;
+            MyAccountFragment myAccountFragment = new MyAccountFragment();
+            return myAccountFragment;
         }
     }
 
