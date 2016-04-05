@@ -94,7 +94,7 @@ public class AccountAuthenticator {
                         int success = Integer.parseInt(res.getString(context.getResources().getString(R.string.key_success)));
                         if (success == 1) {
                             DBHandler dbHandler = new DBHandler(context);
-                            dbHandler.addUser(res.getString("id"), res.getString("name"), res.getString("email"), res.getString("location"), res.getString("birthday"), res.getString("created_at"));
+                            dbHandler.addUser(res.getString("id"), res.getString("name"), res.getString("email"), res.getString("password"), res.getString("location"), res.getString("birthday"), res.getString("created_at"));
                             Intent intent = new Intent(context, MainActivity.class);
                             intent.putExtra("user_id", Integer.parseInt(res.getString("id")));
                             context.startActivity(intent);

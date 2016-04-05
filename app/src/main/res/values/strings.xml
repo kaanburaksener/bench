@@ -37,4 +37,13 @@
     <string name="json_all_url"></string>
     <string name="invalid_json"></string>
     <string name="invalid_post"></string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
+    <string name="player_position">Player Position</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+
+
 </resources>

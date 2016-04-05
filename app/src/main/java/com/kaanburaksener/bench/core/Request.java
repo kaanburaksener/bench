@@ -14,8 +14,10 @@ public class Request {
     private String status;
     private int ownerID;
     private String ownerName;
+    private String createdAt;
 
-    public Request(int id, String title, String description, String location, String playerPosition, String time, int statusID, String status, int ownerID, String ownerName){
+    //This constructor is for external requests
+    public Request(int id, String title, String description, String location, String playerPosition, String time, int statusID, String status, int ownerID, String ownerName, String createdAt){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -26,6 +28,21 @@ public class Request {
         this.status = status;
         this.ownerID = ownerID;
         this.ownerName = ownerName;
+        this.createdAt = createdAt;
+    }
+
+    //This constructor is for internal requests
+    public Request(int id, String title, String description, String location, String playerPosition, String time, int statusID, String status, int ownerID, String createdAt){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.playerPosition = playerPosition;
+        this.time = time;
+        this.statusID = statusID;
+        this.status = status;
+        this.ownerID = ownerID;
+        this.createdAt = createdAt;
     }
 
     public int getID() {
@@ -106,5 +123,13 @@ public class Request {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public String getCreatedTime() {
+        return createdAt;
+    }
+
+    public void setCreatedTime(String createdAt) {
+        this.createdAt = createdAt;
     }
 }
