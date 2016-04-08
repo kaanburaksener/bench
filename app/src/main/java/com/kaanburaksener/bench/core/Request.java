@@ -3,6 +3,7 @@ package com.kaanburaksener.bench.core;
 /**
  * Created by kaanburaksener on 02/04/16.
  */
+
 public class Request {
     private int id;
     private String title;
@@ -28,20 +29,6 @@ public class Request {
         this.status = status;
         this.ownerID = ownerID;
         this.ownerName = ownerName;
-        this.createdAt = createdAt;
-    }
-
-    //This constructor is for internal requests
-    public Request(int id, String title, String description, String location, String playerPosition, String time, int statusID, String status, int ownerID, String createdAt){
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.playerPosition = playerPosition;
-        this.time = time;
-        this.statusID = statusID;
-        this.status = status;
-        this.ownerID = ownerID;
         this.createdAt = createdAt;
     }
 

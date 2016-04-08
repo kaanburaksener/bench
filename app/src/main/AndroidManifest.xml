@@ -3,6 +3,7 @@
     package="com.kaanburaksener.bench" >
 
     <application
+        android:name=".handler.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -38,6 +39,7 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
         </activity>
+
     </application>
 
     <!--  Internet Permissions -->

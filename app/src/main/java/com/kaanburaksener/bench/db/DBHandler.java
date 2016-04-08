@@ -311,6 +311,26 @@ public class DBHandler extends SQLiteOpenHelper {
         return id;
     }
 
+    /**
+     * This method is used to get the user id
+     */
+
+    public String getUserName(){
+        String name = "";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(USER_ACCOUNT_TABLE_NAME, new String[]{USER_ACCOUNT_COLUMN_NAME}, null, null, null, null, null, null);
+
+        if (c.moveToFirst()) {
+            name = c.getString(0);
+        }
+
+        c.close();
+        db.close();
+
+        return name;
+    }
+
     /** REQUEST TABLE FUNCTIONS **/
 
     /**
@@ -357,6 +377,7 @@ public class DBHandler extends SQLiteOpenHelper {
                     res.getInt(res.getColumnIndex(REQUEST_COLUMN_STATUS_ID)),
                     getRequestStatusName(res.getInt(res.getColumnIndex(REQUEST_COLUMN_STATUS_ID))),
                     res.getInt(res.getColumnIndex(REQUEST_COLUMN_OWNER_ID)),
+                    getUserName(),
                     res.getString(res.getColumnIndex(REQUEST_APPLICATION_COLUMN_CREATED_AT)));
             requests.add(request);
             res.moveToNext();
@@ -402,8 +423,6 @@ public class DBHandler extends SQLiteOpenHelper {
             res.moveToNext();
         }
 
-        db.close();
-
         return requestApplications;
     }
 
@@ -420,23 +439,19 @@ public class DBHandler extends SQLiteOpenHelper {
      * This method is used to get all player positions
      */
 
-    public HashMap<Integer, String> getPlayerPositions() {
-        HashMap<Integer, String> playerPosition = new HashMap<Integer, String>();
+    public List<String> getPlayerPositions() {
+        List<String> playerPositions = new ArrayList<String>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "SELECT * FROM " + PLAYER_POSITION_TABLE_NAME, null );
+        Cursor res =  db.rawQuery( "SELECT name FROM " + PLAYER_POSITION_TABLE_NAME, null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            playerPosition.put(
-                    res.getInt(res.getColumnIndex(PLAYER_POSITION_COLUMN_ID)),
-                    res.getString(res.getColumnIndex(PLAYER_POSITION_COLUMN_NAME)));
+            playerPositions.add(res.getString(res.getColumnIndex(PLAYER_POSITION_COLUMN_NAME)));
             res.moveToNext();
         }
 
-        db.close();
-
-        return playerPosition;
+        return playerPositions;
     }
 
     /**
@@ -454,9 +469,26 @@ public class DBHandler extends SQLiteOpenHelper {
             playerPositionName = res.getString(res.getColumnIndex(PLAYER_POSITION_COLUMN_NAME));
         }
 
-        db.close();
-
         return playerPositionName;
+    }
+
+    /**
+     * This method is used to get the player position id
+     */
+
+    public int getPlayerPositionID(String name){
+        int playerPositionID = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery("SELECT * FROM " + PLAYER_POSITION_TABLE_NAME + " WHERE " + PLAYER_POSITION_COLUMN_NAME + " = ?; ", new String[] {name});
+
+        if (res != null) {
+            res.moveToFirst();
+            playerPositionID = res.getInt(res.getColumnIndex(PLAYER_POSITION_COLUMN_ID));
+        }
+
+        return playerPositionID;
     }
 
 
@@ -470,7 +502,7 @@ public class DBHandler extends SQLiteOpenHelper {
         HashMap<Integer, String> requestStatuses = new HashMap<Integer, String>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "SELECT * FROM " + REQUEST_STATUS_TABLE_NAME, null );
+        Cursor res =  db.rawQuery("SELECT * FROM " + REQUEST_STATUS_TABLE_NAME, null);
         res.moveToFirst();
 
         while(res.isAfterLast() == false){

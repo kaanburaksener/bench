@@ -37,11 +37,10 @@ public class AccountHandler {
     }
 
     public void performSignup(){
-        AccountAuthenticator.signup_user(name, email, password, context);
+        AccountAuthenticator.signupUser(name, email, password, context);
     }
 
     public void performSignin(){
-        AccountAuthenticator.signin_user(email, password, context, activity);
+        AccountAuthenticator.signinUser(email, password, context, activity);
     }
-
 }

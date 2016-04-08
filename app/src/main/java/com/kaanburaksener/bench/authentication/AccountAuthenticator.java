@@ -32,7 +32,7 @@ public class AccountAuthenticator {
      * This function is used to send sign up request to the server
      */
 
-    public static void signup_user(final String name, final String email, final String password, final Context context) {
+    public static void signupUser(final String name, final String email, final String password, final Context context) {
         StringRequest request = new StringRequest(Request.Method.POST, context.getResources().getString(R.string.signup_url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -83,7 +83,7 @@ public class AccountAuthenticator {
      * This function is used to send sign in request to the server
      */
 
-    public static final void signin_user(final String email, final String password, final Context context, final Activity activity) {
+    public static final void signinUser(final String email, final String password, final Context context, final Activity activity) {
         StringRequest request = new StringRequest(Request.Method.POST, context.getResources().getString(R.string.signin_url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
