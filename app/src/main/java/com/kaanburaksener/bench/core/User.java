@@ -55,13 +55,7 @@ public class User {
     }
 
     public String getLocation() {
-        String notAvailable = "-";
-
-        if(location != null || location != "null") {
-            return location;
-        } else {
-            return notAvailable;
-        }
+        return location;
     }
 
     public void setLocation(String location) {
@@ -69,13 +63,7 @@ public class User {
     }
 
     public String getBirthday() {
-        String notAvailable = "-";
-
-        if(birthday != null || birthday != "null") {
-            return birthday;
-        } else {
-            return notAvailable;
-        }
+        return birthday;
     }
 
     public void setBirthday(String birthday) {

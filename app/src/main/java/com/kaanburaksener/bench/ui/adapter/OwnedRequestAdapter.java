@@ -2,16 +2,20 @@ package com.kaanburaksener.bench.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.core.Request;
 import com.kaanburaksener.bench.handler.RequestApplicationHandler;
 import com.kaanburaksener.bench.handler.RequestHandler;
+import com.kaanburaksener.bench.ui.RequestHistoryActivity;
+import com.kaanburaksener.bench.ui.ViewApplicantsActivity;
 
 import java.util.List;
 
@@ -46,20 +50,30 @@ public class OwnedRequestAdapter extends RecyclerView.Adapter<OwnedRequestAdapte
         requestViewHolder.vTime.setText(request.getTime());
         requestViewHolder.vStatus.setText(request.getStatus());
         final int requestID = request.getID();
+        final int statusID = request.getStatusID();
 
-        requestViewHolder.vCloseRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RequestHandler.performCloseRequest(requestID, activity, context, windowContext);
-            }
-        });
+        if(statusID == 2) {
+            requestViewHolder.vButtonHolder.setVisibility(View.GONE);
+            requestViewHolder.vDivider.setVisibility(View.GONE);
+        } else {
+            requestViewHolder.vCloseRequestButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RequestHandler.performCloseRequest(requestID, activity, context, windowContext);
+                }
+            });
 
-        requestViewHolder.vViewApplicantsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RequestApplicationHandler.performGetApplicants(requestID, activity, context, windowContext);
-            }
-        });
+            requestViewHolder.vViewApplicantsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ViewApplicantsActivity.class);
+                    intent.putExtra("request_id", requestID);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                    activity.finish();
+                }
+            });
+        }
     }
 
     @Override
@@ -80,6 +94,8 @@ public class OwnedRequestAdapter extends RecyclerView.Adapter<OwnedRequestAdapte
         protected TextView vStatus;
         protected TextView vViewApplicantsButton;
         protected TextView vCloseRequestButton;
+        protected LinearLayout vButtonHolder;
+        protected View vDivider;
 
         public OwnedRequestViewHolder(View v) {
             super(v);
@@ -91,6 +107,8 @@ public class OwnedRequestAdapter extends RecyclerView.Adapter<OwnedRequestAdapte
             vStatus = (TextView)  v.findViewById(R.id.status);
             vViewApplicantsButton = (TextView)  v.findViewById(R.id.viewApplicantsButton);
             vCloseRequestButton = (TextView)  v.findViewById(R.id.closeRequestButton);
+            vButtonHolder = (LinearLayout) v.findViewById(R.id.buttonHolder);
+            vDivider = (View) v.findViewById(R.id.divider);
         }
     }
 }

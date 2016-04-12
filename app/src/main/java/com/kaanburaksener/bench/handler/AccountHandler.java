@@ -22,10 +22,12 @@ public class AccountHandler {
     private String birthday;
     private Context context;
     private Activity activity;
+    private Context windowContext;
 
-    public AccountHandler(Context context, Activity activity){
+    public AccountHandler(Activity activity, Context context, Context windowContext){
         this.context = context;
         this.activity = activity;
+        this.windowContext = windowContext;
     }
 
     public void receiveData(String name, String email, String password){
@@ -46,14 +48,14 @@ public class AccountHandler {
     }
 
     public void performSignup(){
-        AccountAuthenticator.signupUser(name, email, password, context);
+        AccountAuthenticator.signupUser(name, email, password, activity, context, windowContext);
     }
 
     public void performSignin(){
-        AccountAuthenticator.signinUser(email, password, context, activity);
+        AccountAuthenticator.signinUser(email, password, activity, context, windowContext);
     }
 
     public void performUpdate(){
-        AccountAuthenticator.updateUser(userID, location, birthday, context, activity);
+        AccountAuthenticator.updateUser(userID, location, birthday, activity, context, windowContext);
     }
 }

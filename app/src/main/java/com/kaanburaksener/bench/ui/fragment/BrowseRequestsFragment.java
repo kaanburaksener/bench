@@ -4,15 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.callback.VolleyCallback;
 import com.kaanburaksener.bench.core.Request;
@@ -25,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -65,7 +59,6 @@ public class BrowseRequestsFragment extends BaseFragment {
 
             @Override
             public void onSuccess(JSONArray jsonArray) {
-                DBHandler dbHandler = new DBHandler(mainActivity.getApplicationContext());
                 try {
                     final ProgressDialog progressDialog =  new ProgressDialog(mainActivity.getWindow().getContext());
                     progressDialog.setMessage("Request is being processed...");
@@ -97,8 +90,7 @@ public class BrowseRequestsFragment extends BaseFragment {
             }
 
             @Override
-            public void onError(String msg) {
-            }
+            public void onError(String msg) {}
         });
     }
 

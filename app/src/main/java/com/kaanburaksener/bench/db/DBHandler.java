@@ -533,13 +533,12 @@ public class DBHandler extends SQLiteOpenHelper {
         return applicationStatusName;
     }
 
+
     /** LOGOUT **/
 
     public void refreshDB(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DELETE FROM "+ USER_ACCOUNT_TABLE_NAME);
-        db.execSQL("DELETE FROM "+ REQUEST_TABLE_NAME);
-
         db.close();
     }
 }

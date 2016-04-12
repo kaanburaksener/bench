@@ -45,13 +45,15 @@ public class EditProfileActivity extends AppCompatActivity {
      */
 
     private void initializer() {
+        setStatusBarColor();
         dbHandler = new DBHandler(this);
-        updateButton = (Button) findViewById(R.id.updateButton);
+        userID = dbHandler.getUserId();
+        accountHandler = new AccountHandler(this, this.getApplicationContext(), this.getWindow().getContext());
         locationET = (EditText) findViewById(R.id.location);
         birthdayTV = (TextView) findViewById(R.id.birthday);
-        accountHandler = new AccountHandler(this, this);
-        userID = dbHandler.getUserId();
-        setStatusBarColor();
+        updateButton = (Button) findViewById(R.id.updateButton);
+        updateButton.setOnClickListener(updateProfileHandler);
+        addListenerForDatePicker();
     }
 
     /**
@@ -73,19 +75,14 @@ public class EditProfileActivity extends AppCompatActivity {
      * This function is used to trigger creating a new request process
      */
 
-    public void addListenerForUpdateButton() {
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                location = locationET.getText().toString();
-
-                if(checkFormData()) {
-                    accountHandler.receiveData(userID, location, birthday);
-                    accountHandler.performUpdate();
-                }
+    View.OnClickListener updateProfileHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            if(checkFormData()) {
+                accountHandler.receiveData(userID, location, birthday);
+                accountHandler.performUpdate();
             }
-        });
-    }
+        }
+    };
 
     public boolean checkFormData() {
         boolean result = true;

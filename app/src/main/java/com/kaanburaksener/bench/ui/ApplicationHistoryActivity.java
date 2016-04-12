@@ -1,5 +1,7 @@
 package com.kaanburaksener.bench.ui;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +11,15 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.kaanburaksener.bench.R;
+import com.kaanburaksener.bench.callback.VolleyCallback;
 import com.kaanburaksener.bench.core.RequestApplication;
 import com.kaanburaksener.bench.db.DBHandler;
+import com.kaanburaksener.bench.handler.RequestApplicationHandler;
 import com.kaanburaksener.bench.ui.adapter.ApplicationAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +33,7 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
     private ApplicationAdapter adapter;
     private RecyclerView recList;
     private LinearLayoutManager llm;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +47,15 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
      */
 
     private void initializer() {
+        setStatusBarColor();
         dbHandler = new DBHandler(this);
-        recList = (RecyclerView) findViewById(R.id.requestList);
+        recList = (RecyclerView) findViewById(R.id.applicationList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        applications = new ArrayList<RequestApplication>();
-        adapter = new ApplicationAdapter(getApplicationList());
-        recList.setAdapter(adapter);
-        setStatusBarColor();
+        activity = this;
+        getMyApplications();
     }
 
     /**
@@ -65,10 +73,47 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
         }
     }
 
-    private List<RequestApplication> getApplicationList() {
-        //applications = dbHandler.getRequestApplications();
-        return applications;
+    public void getMyApplications(){
+        RequestApplicationHandler.performGetUserApplications(dbHandler.getUserId(), activity.getApplicationContext(), new VolleyCallback() {
+
+            @Override
+            public void onSuccess(JSONArray jsonArray) {
+                try {
+                    final ProgressDialog progressDialog = new ProgressDialog(activity.getWindow().getContext());
+                    progressDialog.setMessage("Request is being processed...");
+                    progressDialog.show();
+                    applications = new ArrayList<RequestApplication>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject request = (JSONObject) jsonArray.get(i);
+                        RequestApplication application = new RequestApplication();
+
+                        application.setRequestID(Integer.parseInt(request.getString("id")));
+                        application.setTitle(request.getString("title"));
+                        application.setLocation(request.getString("location"));
+                        application.setPlayerPosition(dbHandler.getPlayerPositionName(Integer.parseInt(request.getString("player_position_id"))));
+                        application.setTime(request.getString("time"));
+                        application.setRequestStatus(dbHandler.getRequestStatusName(Integer.parseInt(request.getString("status_id"))));
+                        application.setApplicationStatus(dbHandler.getApplicationStatusName(Integer.parseInt(request.getString("application_status_id"))));
+                        application.setOwnerName(request.getString("request_owner_name"));
+
+                        applications.add(application);
+                    }
+
+                    adapter = new ApplicationAdapter(applications, activity, getApplicationContext(), getWindow().getContext());
+                    recList.setAdapter(adapter);
+                    progressDialog.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+            }
+        });
     }
+
 
     @Override
     protected void onDestroy() {

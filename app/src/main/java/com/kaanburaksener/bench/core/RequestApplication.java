@@ -40,6 +40,8 @@ public class RequestApplication {
         this.ownerName = ownerName;
     }
 
+    public RequestApplication(){}
+
     public int getApplicantID() {
         return applicantID;
     }

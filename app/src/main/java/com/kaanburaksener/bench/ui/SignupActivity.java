@@ -39,7 +39,6 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initializer();
-        signupButton.setOnClickListener(signupHandler);
     }
 
     /**
@@ -47,18 +46,18 @@ public class SignupActivity extends AppCompatActivity {
      */
 
     private void initializer() {
-        signupButton = (Button) findViewById(R.id.signupButton);
+        setStatusBarColor();
+        actionBar = getSupportActionBar();
+        actionBar.hide();
         appName = (TextView) findViewById(R.id.appName);
         nameET = (EditText) findViewById(R.id.name);
         emailET = (EditText) findViewById(R.id.email);
         passwordET = (EditText) findViewById(R.id.password);
-        accountHandler = new AccountHandler(this, this);
+        signupButton = (Button) findViewById(R.id.signupButton);
+        signupButton.setOnClickListener(signupHandler);
+        accountHandler = new AccountHandler(this, this.getApplicationContext(), this.getWindow().getContext());
         helper = new Helper();
-        actionBar = getSupportActionBar();
-
         setFont();
-        setStatusBarColor();
-        actionBar.hide(); //This command hides action bar
     }
 
     /**
@@ -91,10 +90,6 @@ public class SignupActivity extends AppCompatActivity {
 
     View.OnClickListener signupHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            name = nameET.getText().toString();
-            email = emailET.getText().toString();
-            password = passwordET.getText().toString();
-
             if(checkFormData()) {
                 accountHandler.receiveData(name, email, password);
                 accountHandler.performSignup();
@@ -118,6 +113,10 @@ public class SignupActivity extends AppCompatActivity {
 
     public boolean checkFormData() {
         boolean result = true;
+
+        name = nameET.getText().toString();
+        email = emailET.getText().toString();
+        password = passwordET.getText().toString();
 
         if (name.isEmpty() || name.length() < 4 || name.length() > 32) {
             result = false;

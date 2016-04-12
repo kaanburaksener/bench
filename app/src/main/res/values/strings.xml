@@ -10,6 +10,8 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
     <string name="my_profile">My Profile</string>
     <string name="history_requests">History / Requests</string>
     <string name="history_applications">History / Applications</string>
@@ -28,10 +30,13 @@
     <string name="create_new_request_url">http://bench-kaanburaksener.rhcloud.com/request/create_new_request.php</string>
     <string name="close_request_url">http://bench-kaanburaksener.rhcloud.com/request/close_request.php</string>
     <string name="get_opened_requests_url">http://bench-kaanburaksener.rhcloud.com/request/get_opened_requests.php</string>
+    <string name="get_user_requests_url">http://bench-kaanburaksener.rhcloud.com/request/get_user_requests.php</string>
 
-    <string name="get_applicants_url">http://bench-kaanburaksener.rhcloud.com/applicantt/get_applicants.php</string>
+    <string name="get_applicants_url">http://bench-kaanburaksener.rhcloud.com/application/get_applicants.php</string>
     <string name="create_new_request_application_url">http://bench-kaanburaksener.rhcloud.com/application/create_new_application.php</string>
     <string name="delete_application_url">http://bench-kaanburaksener.rhcloud.com/application/delete_application.php</string>
+    <string name="finalize_application_url">http://bench-kaanburaksener.rhcloud.com/application/finalize_application.php</string>
+    <string name="get_user_applications_url">http://bench-kaanburaksener.rhcloud.com/application/get_user_applications.php</string>
 
     <string name="key_success">success</string>
     <string name="key_message">message</string>

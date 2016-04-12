@@ -37,7 +37,6 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         initializer();
-        signinButton.setOnClickListener(signinHandler);
     }
 
     /**
@@ -45,17 +44,17 @@ public class SigninActivity extends AppCompatActivity {
      */
 
     private void initializer() {
-        signinButton = (Button) findViewById(R.id.signinButton);
+        setStatusBarColor();
+        actionBar = getSupportActionBar();
+        actionBar.hide();
+        helper = new Helper();
+        accountHandler = new AccountHandler(this, this.getApplicationContext(), this.getWindow().getContext());
         appName = (TextView) findViewById(R.id.appName);
         emailET = (EditText) findViewById(R.id.email);
         passwordET = (EditText) findViewById(R.id.password);
-        accountHandler = new AccountHandler(this, this);
-        helper = new Helper();
-        actionBar = getSupportActionBar();
-
+        signinButton = (Button) findViewById(R.id.signinButton);
+        signinButton.setOnClickListener(signinHandler);
         setFont();
-        setStatusBarColor();
-        actionBar.hide(); //This command hides action bar
     }
 
     /**
@@ -88,9 +87,6 @@ public class SigninActivity extends AppCompatActivity {
 
     View.OnClickListener signinHandler = new View.OnClickListener() {
         public void onClick(View v) {
-            email = emailET.getText().toString();
-            password = passwordET.getText().toString();
-
             if(checkFormData()) {
                 accountHandler.receiveData(email, password);
                 accountHandler.performSignin();
@@ -115,8 +111,8 @@ public class SigninActivity extends AppCompatActivity {
     public boolean checkFormData() {
         boolean result = true;
 
-        this.email = emailET.getText().toString();
-        this.password = passwordET.getText().toString();
+        email = emailET.getText().toString();
+        password = passwordET.getText().toString();
 
         if (email.isEmpty() || !helper.isEmailValid(email)) {
             result = false;

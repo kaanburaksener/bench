@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,19 +18,14 @@ import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.StringRequest;
 
 import com.kaanburaksener.bench.callback.VolleyCallback;
-import com.kaanburaksener.bench.db.DBHandler;
 import com.kaanburaksener.bench.MainActivity;
 import com.kaanburaksener.bench.R;
-import com.kaanburaksener.bench.ui.fragment.BrowseRequestsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,8 +33,6 @@ import java.util.Map;
  */
 
 public class RequestHandler {
-    private ArrayList<com.kaanburaksener.bench.core.Request> openedRequests;
-
     public RequestHandler() {}
 
     public static void performCreateNewRequest (final String title,
@@ -73,11 +65,7 @@ public class RequestHandler {
                                 String message = res.getString(context.getResources().getString(R.string.key_message));
 
                                 if (success == 1) {
-                                    DBHandler dbHandler = new DBHandler(context);
-                                    dbHandler.addRequest(res.getString("id"), res.getString("title"), res.getString("description"), res.getString("location"), res.getString("player_position_id"), res.getString("time"), res.getString("status_id"), res.getString("owner_id"), res.getString("created_at"));
-
                                     progressDialog.dismiss();
-
                                     Intent intent = new Intent(context, MainActivity.class);
                                     intent.putExtra("user_id", Integer.parseInt(res.getString("id")));
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -129,9 +117,9 @@ public class RequestHandler {
     }
 
     public static void performCloseRequest (final int requestID,
-                                             final Activity activity,
-                                             final Context context,
-                                             final Context windowContext){
+                                            final Activity activity,
+                                            final Context context,
+                                            final Context windowContext){
 
         final ProgressDialog progressDialog =  new ProgressDialog(windowContext);
         progressDialog.setMessage("Request is being processed...");
@@ -155,6 +143,7 @@ public class RequestHandler {
                                     progressDialog.dismiss();
                                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(context, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     context.startActivity(intent);
                                     activity.finish();
                                 } else if (success == 2) {
@@ -184,8 +173,7 @@ public class RequestHandler {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<>();
 
-                // the POST parameters:
-                params.put("id", new Integer(requestID).toString());
+                params.put("request_id", new Integer(requestID).toString());
 
                 return params;
             }
@@ -215,6 +203,30 @@ public class RequestHandler {
                         callback.onError(error.toString());
                     }
             });
+        Volley.newRequestQueue(context).add(postRequest);
+    }
+
+    public static void performGetUserRequests (final int userID,
+                                               final Context context,
+                                               final VolleyCallback callback){
+
+        String url = context.getResources().getString(R.string.get_user_requests_url);
+
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("user_id", new Integer(userID).toString());
+
+        JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.POST, url, new JSONObject(param), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                callback.onError(error.toString());
+            }
+        });
         Volley.newRequestQueue(context).add(postRequest);
     }
 }

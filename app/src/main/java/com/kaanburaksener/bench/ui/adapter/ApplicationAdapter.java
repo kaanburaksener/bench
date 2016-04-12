@@ -1,5 +1,7 @@
 package com.kaanburaksener.bench.ui.adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.TextView;
 
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.core.RequestApplication;
+import com.kaanburaksener.bench.db.DBHandler;
+import com.kaanburaksener.bench.handler.RequestApplicationHandler;
 
 import java.util.List;
 
@@ -16,9 +20,17 @@ import java.util.List;
  */
 public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.ApplicationViewHolder> {
     private List<RequestApplication> applicationList;
+    private Activity activity;
+    private Context context;
+    private Context windowContext;
+    private DBHandler dbHandler;
 
-    public ApplicationAdapter(List<RequestApplication> applicationList) {
+    public ApplicationAdapter(List<RequestApplication> applicationList, Activity activity, Context context, Context windowContext) {
         this.applicationList = applicationList;
+        this.activity = activity;
+        this.context = context;
+        this.windowContext = windowContext;
+        this.dbHandler = new DBHandler(context);
     }
 
     @Override
@@ -33,9 +45,19 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         requestViewHolder.vLocation.setText(requestApplication.getLocation());
         requestViewHolder.vPlayerPosition.setText(requestApplication.getPlayerPosition());
         requestViewHolder.vTime.setText(requestApplication.getTime());
-        requestViewHolder.vRequestStatus.setText(requestApplication.getRequestStatus());
+        requestViewHolder.vRequestStatus.setText("Request is " + requestApplication.getRequestStatus());
         requestViewHolder.vOwner.setText(requestApplication.getOwnerName());
-        requestViewHolder.vApplicationStatus.setText(requestApplication.getApplicationStatus());
+        requestViewHolder.vApplicationStatus.setText("Application is " + requestApplication.getApplicationStatus());
+        final int userID = dbHandler.getUserId();
+        final int requestID = requestApplication.getRequestID();
+
+        requestViewHolder.vCancelApplicationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestApplicationHandler.performCancelRequestApplication(requestID, userID, activity, context, windowContext);
+            }
+        });
+
     }
 
     @Override
