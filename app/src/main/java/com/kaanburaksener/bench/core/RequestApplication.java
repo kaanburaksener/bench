@@ -4,26 +4,40 @@ package com.kaanburaksener.bench.core;
  * Created by kaanburaksener on 02/04/16.
  */
 public class RequestApplication {
-    private int requestID;
     private int applicantID;
     private int applicationStatusID;
-    private String applicationStatusName;
-    private String createdAt;
+    private int ownerID;
+    private int requestID;
+    private String applicationStatus;
+    private String title;
+    private String location;
+    private String playerPosition;
+    private String time;
+    private String requestStatus;
+    private String ownerName;
 
-    public RequestApplication(int requestID, int applicantID, int applicationStatusID, String applicationStatusName, String createdAt){
-        this.requestID = requestID;
+    public RequestApplication(int applicantID,
+                              int applicationStatusID,
+                              int ownerID,
+                              int requestID,
+                              String applicationStatus,
+                              String title,
+                              String location,
+                              String playerPosition,
+                              String time,
+                              String requestStatus,
+                              String ownerName){
         this.applicantID = applicantID;
         this.applicationStatusID = applicationStatusID;
-        this.applicationStatusName = applicationStatusName;
-        this.createdAt = createdAt;
-    }
-
-    public int getRequestID() {
-        return requestID;
-    }
-
-    public void setRequestID(int requestID) {
+        this.ownerID = ownerID;
         this.requestID = requestID;
+        this.applicationStatus = applicationStatus;
+        this.title = title;
+        this.location = location;
+        this.playerPosition = playerPosition;
+        this.time = time;
+        this.requestStatus = requestStatus;
+        this.ownerName = ownerName;
     }
 
     public int getApplicantID() {
@@ -42,19 +56,75 @@ public class RequestApplication {
         this.applicationStatusID = applicationStatusID;
     }
 
-    public String getApplicationStatusName() {
-        return applicationStatusName;
+    public int getOwnerID() {
+        return ownerID;
     }
 
-    public void setApplicationStatusName(String applicationStatusName) {
-        this.applicationStatusName = applicationStatusName;
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
     }
 
-    public String getCreatedTime() {
-        return createdAt;
+    public int getRequestID() {
+        return requestID;
     }
 
-    public void setCreatedTime(String createdAt) {
-        this.createdAt = createdAt;
+    public void setRequestID(int requestID) {
+        this.requestID = requestID;
+    }
+
+    public String getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    public void setApplicationStatus(String applicationStatusName) {
+        this.applicationStatus = applicationStatusName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getPlayerPosition() {
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(String playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

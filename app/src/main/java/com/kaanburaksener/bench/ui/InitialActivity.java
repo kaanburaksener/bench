@@ -28,7 +28,6 @@ public class InitialActivity extends AppCompatActivity {
 
         if(dbHandler.hasUser()) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra("user_id", Integer.parseInt(dbHandler.getUserId()));
             startActivity(intent);
             finish();
         } else {

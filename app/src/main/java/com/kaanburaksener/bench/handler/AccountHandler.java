@@ -14,9 +14,12 @@ import com.kaanburaksener.bench.authentication.AccountAuthenticator;
  */
 
 public class AccountHandler {
+    private int userID;
     private String name;
     private String email;
     private String password;
+    private String location;
+    private String birthday;
     private Context context;
     private Activity activity;
 
@@ -36,11 +39,21 @@ public class AccountHandler {
         this.password = password;
     }
 
+    public void receiveData(int userID, String location,String birthday){
+        this.userID = userID;
+        this.location = location;
+        this.birthday = birthday;
+    }
+
     public void performSignup(){
         AccountAuthenticator.signupUser(name, email, password, context);
     }
 
     public void performSignin(){
         AccountAuthenticator.signinUser(email, password, context, activity);
+    }
+
+    public void performUpdate(){
+        AccountAuthenticator.updateUser(userID, location, birthday, context, activity);
     }
 }

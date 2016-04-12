@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:gravity="center_vertical|center">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my_account_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:textColor="@color/primary_text"
+                android:elevation="1dp"
+                android:textSize="30sp"
+                android:text="User Name"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="vertical"
+        android:background="@color/form_background_color"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/location"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            android:drawableLeft="@drawable/ic_location"
+            android:drawablePadding="5dp"/>
+
+        <TextView
+            android:id="@+id/birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="Birthday"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            android:layout_below="@id/location"
+            android:drawableLeft="@drawable/ic_date"
+            android:drawablePadding="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signin_button"
+            android:elevation="1dp"
+            android:text="Edit Profile"
+            android:onClick="goEditProfileActivity"
+            android:textColor="@color/primary_button_text"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

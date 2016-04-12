@@ -10,8 +10,6 @@
     <color name="divider">#8c96a0</color>
     <color name="primary_button">#32b846</color>
     <color name="primary_button_text">#FFFFFF</color>
-    <color name="secondary_button">#E6A922</color>
-    <color name="secondary_button_text">#FFFFFF</color>
     <color name="logo_primary">#32b846</color>
     <color name="logo_secondary">#FFFFFF</color>
     <color name="form_background_color">#FFFFFF</color>
@@ -19,4 +17,6 @@
     <color name="text_shadow_white">#FFFFFF</color>
     <color name="tabs_scroll_color">#FFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="cancel_or_delete">#EF5350</color>
+    <color name="edit">#FFCA28</color>
 </resources>

@@ -1,6 +1,5 @@
 package com.kaanburaksener.bench;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import com.android.debug.hv.ViewServer;
 
 import android.support.v4.view.ViewPager;
 
-import com.kaanburaksener.bench.db.DBHandler;
 import com.kaanburaksener.bench.ui.adapter.ViewPagerAdapter;
 import com.kaanburaksener.bench.ui.SlidingTabLayout;
 
@@ -20,19 +18,12 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     private SlidingTabLayout tabs;
     private int numberOftabs = 3;
-    private DBHandler dbHandler;
-    private int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializer();
-
-        // Getting attached intent data
-        Intent i = getIntent();
-        Bundle extras = getIntent().getExtras();
-        userID = extras.getInt("user_id");
     }
 
     /**
@@ -40,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private void initializer() {
-        dbHandler = new DBHandler(this);
-
         // Creating The Toolbar and setting it as the Toolbar for the activity
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);

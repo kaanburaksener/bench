@@ -110,7 +110,7 @@ public class MakeRequestFragment extends BaseFragment {
                 description = descriptionET.getText().toString();
                 location = locationET.getText().toString();
                 playerPosition = String.valueOf(playerPositionSpinner.getSelectedItem());
-                ownerID = Integer.parseInt(dbHandler.getUserId());
+                ownerID = dbHandler.getUserId();
                 playerPositionID = dbHandler.getPlayerPositionID(playerPosition);
                 dt = date + " " + time;
 

@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical|center">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my_account_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:textColor="@color/primary_text"
+                android:elevation="1dp"
+                android:layout_marginLeft="2dp"
+                android:textSize="20sp"
+                android:text="User Name"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:background="@color/form_background_color"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/myProfile"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/my_profile"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            android:drawableLeft="@drawable/ic_my_profile"
+            android:drawablePadding="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/applicationHistory"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/history_applications"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            android:layout_below="@id/myProfile"
+            android:drawableLeft="@drawable/ic_history"
+            android:drawablePadding="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/requestHistory"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/history_requests"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            android:layout_below="@id/applicationHistory"
+            android:drawableLeft="@drawable/ic_history"
+            android:drawablePadding="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/signOut"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="@string/signout"
+            android:gravity="center_vertical"
+            android:textSize="14dp"
+            android:layout_below="@id/requestHistory"
+            android:drawableLeft="@drawable/ic_sign_out"
+            android:drawablePadding="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -6,6 +6,13 @@
     <string name="password">Password</string>
     <string name="signup">Sign Up</string>
     <string name="signin">Sign In</string>
+    <string name="signout">Sign Out</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="my_profile">My Profile</string>
+    <string name="history_requests">History / Requests</string>
+    <string name="history_applications">History / Applications</string>
     <string name="create_an_account">Create an Account</string>
     <string name="already_have_an_account">Already Have an Account?</string>
     <string name="signup_button">Join</string>
@@ -16,7 +23,15 @@
 
     <string name="signup_url">http://bench-kaanburaksener.rhcloud.com/user/signup_user.php</string>
     <string name="signin_url">http://bench-kaanburaksener.rhcloud.com/user/signin_user.php</string>
+    <string name="update_user_url">http://bench-kaanburaksener.rhcloud.com/user/update_user.php</string>
+
     <string name="create_new_request_url">http://bench-kaanburaksener.rhcloud.com/request/create_new_request.php</string>
+    <string name="close_request_url">http://bench-kaanburaksener.rhcloud.com/request/close_request.php</string>
+    <string name="get_opened_requests_url">http://bench-kaanburaksener.rhcloud.com/request/get_opened_requests.php</string>
+
+    <string name="get_applicants_url">http://bench-kaanburaksener.rhcloud.com/applicantt/get_applicants.php</string>
+    <string name="create_new_request_application_url">http://bench-kaanburaksener.rhcloud.com/application/create_new_application.php</string>
+    <string name="delete_application_url">http://bench-kaanburaksener.rhcloud.com/application/delete_application.php</string>
 
     <string name="key_success">success</string>
     <string name="key_message">message</string>

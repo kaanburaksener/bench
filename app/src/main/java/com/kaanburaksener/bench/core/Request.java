@@ -1,10 +1,12 @@
 package com.kaanburaksener.bench.core;
 
+import java.io.Serializable;
+
 /**
  * Created by kaanburaksener on 02/04/16.
  */
 
-public class Request {
+public class Request implements Serializable {
     private int id;
     private String title;
     private String description;
@@ -31,6 +33,8 @@ public class Request {
         this.ownerName = ownerName;
         this.createdAt = createdAt;
     }
+
+    public Request(){}
 
     public int getID() {
         return id;
