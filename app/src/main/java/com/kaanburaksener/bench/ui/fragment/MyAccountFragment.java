@@ -84,17 +84,15 @@ public class MyAccountFragment extends BaseFragment {
                 case R.id.myProfile:
                     Intent i = new Intent(mainActivity.getApplicationContext(), MyProfileActivity.class);
                     startActivity(i);
-                    mainActivity.finish();
                     break;
                 case R.id.applicationHistory:
                     Intent i2 = new Intent(mainActivity.getApplicationContext(), ApplicationHistoryActivity.class);
+                    i2.putExtra("request id", -1); //-1 shows that ApplicationHistoryActivity is approached not by notification
                     startActivity(i2);
-                    mainActivity.finish();
                     break;
                 case R.id.requestHistory:
                     Intent i3 = new Intent(mainActivity.getApplicationContext(), RequestHistoryActivity.class);
                     startActivity(i3);
-                    mainActivity.finish();
                     break;
                 case R.id.signOut:
                     final ProgressDialog progressDialog =  new ProgressDialog(mainActivity.getWindow().getContext());

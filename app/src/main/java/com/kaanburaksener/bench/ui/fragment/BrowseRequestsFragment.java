@@ -2,11 +2,14 @@ package com.kaanburaksener.bench.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.callback.VolleyCallback;
@@ -25,12 +28,13 @@ import java.util.List;
 /**
  * Created by kaanburaksener on 31/03/16.
  */
-public class BrowseRequestsFragment extends BaseFragment {
+public class BrowseRequestsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private DBHandler dbHandler;
     private List<Request> requests;
     private RequestAdapter adapter;
     private RecyclerView recList;
     private LinearLayoutManager llm;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,23 +50,35 @@ public class BrowseRequestsFragment extends BaseFragment {
 
     private void initializer(View v) {
         dbHandler = new DBHandler(mainActivity);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_1,
+                R.color.refresh_progress_2,
+                R.color.refresh_progress_3);
         recList = (RecyclerView) v.findViewById(R.id.requestList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(mainActivity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        getOpenedRequests();
+        swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(true);
+                    getOpenedRequests();
+                }
+            }
+        );
     }
 
     public void getOpenedRequests(){
+        swipeRefreshLayout.setRefreshing(true);
+
         RequestHandler.performGetOpenedRequests(dbHandler.getUserId(), mainActivity.getApplicationContext(), new VolleyCallback() {
 
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 try {
-                    final ProgressDialog progressDialog =  new ProgressDialog(mainActivity.getWindow().getContext());
-                    progressDialog.setMessage("Request is being processed...");
-                    progressDialog.show();
                     requests = new ArrayList<Request>();
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -83,15 +99,26 @@ public class BrowseRequestsFragment extends BaseFragment {
 
                     adapter = new RequestAdapter(requests, mainActivity, mainActivity.getApplicationContext(), mainActivity.getWindow().getContext());
                     recList.setAdapter(adapter);
-                    progressDialog.dismiss();
+                    swipeRefreshLayout.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onError(String msg) {}
+            public void onError(String msg) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
         });
+    }
+
+    /**
+     * This method is called when swipe refresh is pulled down
+     */
+
+    @Override
+    public void onRefresh() {
+        getOpenedRequests();
     }
 
     @Override

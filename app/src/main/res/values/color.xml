@@ -19,4 +19,7 @@
     <color name="transparent">#00000000</color>
     <color name="cancel_or_delete">#EF5350</color>
     <color name="edit">#FFCA28</color>
+    <color name="refresh_progress_1">@color/color_primary_dark</color>
+    <color name="refresh_progress_2">@color/color_primary</color>
+    <color name="refresh_progress_3">@color/accent</color>
 </resources>

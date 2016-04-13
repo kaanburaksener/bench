@@ -7,12 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kaanburaksener.bench.core.RequestApplication;
-import com.kaanburaksener.bench.core.Request;
 import com.kaanburaksener.bench.core.User;
 
 /**
@@ -33,18 +30,6 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String USER_ACCOUNT_COLUMN_BIRTHDAY = "birthday";
     private static final String USER_ACCOUNT_COLUMN_CREATED_AT = "created_at";
 
-    //Request Table
-    private static final String REQUEST_TABLE_NAME = "request";
-    private static final String REQUEST_COLUMN_ID = "id";
-    private static final String REQUEST_COLUMN_TITLE = "title";
-    private static final String REQUEST_COLUMN_DESCRIPTION = "description";
-    private static final String REQUEST_COLUMN_LOCATION = "location";
-    private static final String REQUEST_COLUMN_PLAYER_POSITION_ID = "player_position_id";
-    private static final String REQUEST_COLUMN_TIME = "time";
-    private static final String REQUEST_COLUMN_STATUS_ID = "status_id";
-    private static final String REQUEST_COLUMN_OWNER_ID = "owner_id";
-    private static final String REQUEST_COLUMN_CREATED_AT = "created_at";
-
     //Player Position Table
     private static final String PLAYER_POSITION_TABLE_NAME = "player_position";
     private static final String PLAYER_POSITION_COLUMN_ID = "id";
@@ -59,6 +44,10 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String APPLICATION_STATUS_TABLE_NAME = "application_status";
     private static final String APPLICATION_STATUS_COLUMN_ID = "id";
     private static final String APPLICATION_STATUS_COLUMN_NAME = "name";
+
+    //Accepted Application Table
+    private static final String ACCEPTED_APPLICATION_TABLE_NAME = "accepted_application";
+    private static final String ACCEPTED_APPLICATION_COLUMN_REQUEST_ID = "request_id";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -76,18 +65,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 USER_ACCOUNT_COLUMN_BIRTHDAY + " TEXT, " +
                 USER_ACCOUNT_COLUMN_CREATED_AT + " TEXT);";
 
-        //Create Request table statement
-        String CREATE_REQUEST_TABLE = "CREATE TABLE IF NOT EXISTS " + REQUEST_TABLE_NAME + "(" +
-                REQUEST_COLUMN_ID + " INTEGER, " +
-                REQUEST_COLUMN_TITLE + " TEXT, " +
-                REQUEST_COLUMN_DESCRIPTION + " TEXT, " +
-                REQUEST_COLUMN_LOCATION + " TEXT, " +
-                REQUEST_COLUMN_PLAYER_POSITION_ID + " INTEGER, " +
-                REQUEST_COLUMN_TIME + " TEXT, " +
-                REQUEST_COLUMN_STATUS_ID + " INTEGER, " +
-                REQUEST_COLUMN_OWNER_ID + " INTEGER, " +
-                REQUEST_COLUMN_CREATED_AT + " TEXT);";
-
         //Create Player Position table statement
         String CREATE_PLAYER_POSITION_TABLE = "CREATE TABLE IF NOT EXISTS " + PLAYER_POSITION_TABLE_NAME + "(" +
                 PLAYER_POSITION_COLUMN_ID + " INTEGER, " +
@@ -102,6 +79,10 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_APPLICATION_STATUS_TABLE = "CREATE TABLE IF NOT EXISTS " + APPLICATION_STATUS_TABLE_NAME + "(" +
                 APPLICATION_STATUS_COLUMN_ID + " INTEGER, " +
                 APPLICATION_STATUS_COLUMN_NAME + " TEXT); ";
+
+        //Create Application Status table statement
+        String CREATE_ACCEPTED_APPLICATION_TABLE = "CREATE TABLE IF NOT EXISTS " + ACCEPTED_APPLICATION_TABLE_NAME + "(" +
+                ACCEPTED_APPLICATION_COLUMN_REQUEST_ID + " INTEGER);";
 
         //Insert statements for default variables
         String position1 = "INSERT INTO " + PLAYER_POSITION_TABLE_NAME + " VALUES(1, 'Goalkeeper');";
@@ -128,10 +109,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
         //Create the Tables
         db.execSQL(CREATE_USER_ACCOUNT_TABLE);
-        db.execSQL(CREATE_REQUEST_TABLE);
         db.execSQL(CREATE_PLAYER_POSITION_TABLE);
         db.execSQL(CREATE_REQUEST_STATUS_TABLE);
         db.execSQL(CREATE_APPLICATION_STATUS_TABLE);
+        db.execSQL(CREATE_ACCEPTED_APPLICATION_TABLE);
 
         //Insert Default Values
         db.execSQL(position1);
@@ -161,24 +142,6 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     /** USER TABLE FUNCTIONS **/
-
-    /**
-     * This method is used to add a new user on first registration step
-     */
-
-    public void addUser(String id, String name, String email, String password, String createdAt) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(USER_ACCOUNT_COLUMN_ID, id);
-        contentValues.put(USER_ACCOUNT_COLUMN_NAME, name);
-        contentValues.put(USER_ACCOUNT_COLUMN_EMAIL, email);
-        contentValues.put(USER_ACCOUNT_COLUMN_PASSWORD, password);
-        contentValues.put(USER_ACCOUNT_COLUMN_CREATED_AT, createdAt);
-
-        db.insert(USER_ACCOUNT_TABLE_NAME, null, contentValues);
-        db.close();
-    }
 
     /**
      * This method is used to add a new user on after user updates its data
@@ -246,16 +209,6 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * This method is used to delete existed user in the user table for sign out
-     */
-
-    public void deleteUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(USER_ACCOUNT_TABLE_NAME, USER_ACCOUNT_COLUMN_ID + " = ? ", new String[]{String.valueOf(user.getID())});
-        db.close();
-    }
-
-    /**
      * This method is used to check is there any existed user in the user table
      */
 
@@ -294,93 +247,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
         return Integer.parseInt(id);
-    }
-
-    /**
-     * This method is used to get the user id
-     */
-
-    public String getUserName(){
-        String name = "";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.query(USER_ACCOUNT_TABLE_NAME, new String[]{USER_ACCOUNT_COLUMN_NAME}, null, null, null, null, null, null);
-
-        if (c.moveToFirst()) {
-            name = c.getString(0);
-        }
-
-        c.close();
-        db.close();
-
-        return name;
-    }
-
-    /** REQUEST TABLE FUNCTIONS **/
-
-    /**
-     * This method is used to add a new request
-     */
-
-    public void addRequest(String id, String title, String description, String location, String playerPositionID, String time, String statusID, String ownerID, String createdAt) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(REQUEST_COLUMN_ID, id);
-        contentValues.put(REQUEST_COLUMN_TITLE, title);
-        contentValues.put(REQUEST_COLUMN_DESCRIPTION, description);
-        contentValues.put(REQUEST_COLUMN_LOCATION , location);
-        contentValues.put(REQUEST_COLUMN_PLAYER_POSITION_ID, playerPositionID);
-        contentValues.put(REQUEST_COLUMN_TIME, time);
-        contentValues.put(REQUEST_COLUMN_STATUS_ID, statusID);
-        contentValues.put(REQUEST_COLUMN_OWNER_ID, ownerID);
-        contentValues.put(USER_ACCOUNT_COLUMN_CREATED_AT, createdAt);
-
-        db.insert(REQUEST_TABLE_NAME, null, contentValues);
-        db.close();
-    }
-
-    /**
-     * This method is used to get all requests of User
-     */
-
-    public List<Request> getRequests() {
-        List<Request> requests = new ArrayList<Request>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery("SELECT * FROM " + REQUEST_TABLE_NAME, null);
-        res.moveToFirst();
-
-        while(res.isAfterLast() == false){
-            Request request = new Request(
-                    res.getInt(res.getColumnIndex(REQUEST_COLUMN_ID)),
-                    res.getString(res.getColumnIndex(REQUEST_COLUMN_TITLE)),
-                    res.getString(res.getColumnIndex(REQUEST_COLUMN_DESCRIPTION)),
-                    res.getString(res.getColumnIndex(REQUEST_COLUMN_LOCATION)),
-                    getPlayerPositionName(res.getInt(res.getColumnIndex(REQUEST_COLUMN_PLAYER_POSITION_ID))),
-                    res.getString(res.getColumnIndex(REQUEST_COLUMN_TIME)),
-                    res.getInt(res.getColumnIndex(REQUEST_COLUMN_STATUS_ID)),
-                    getRequestStatusName(res.getInt(res.getColumnIndex(REQUEST_COLUMN_STATUS_ID))),
-                    res.getInt(res.getColumnIndex(REQUEST_COLUMN_OWNER_ID)),
-                    getUserName(),
-                    res.getString(res.getColumnIndex(REQUEST_COLUMN_CREATED_AT)));
-            requests.add(request);
-            res.moveToNext();
-        }
-
-        db.close();
-
-        return requests;
-    }
-
-    /**
-     * This method is used to delete a specific request
-     */
-
-    public void deleteRequest(Request request) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(REQUEST_TABLE_NAME, REQUEST_COLUMN_ID + " = ? ", new String[]{String.valueOf(request.getID())});
-        db.close();
     }
 
     /** PLAYER POSITION TABLE FUNCTIONS **/
@@ -445,29 +311,6 @@ public class DBHandler extends SQLiteOpenHelper {
     /** REQUEST STATUS TABLE FUNCTIONS **/
 
     /**
-     * This method is used to get all request statuses
-     */
-
-    public HashMap<Integer, String> getRequestStatuses() {
-        HashMap<Integer, String> requestStatuses = new HashMap<Integer, String>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery("SELECT * FROM " + REQUEST_STATUS_TABLE_NAME, null);
-        res.moveToFirst();
-
-        while(res.isAfterLast() == false){
-            requestStatuses.put(
-                    res.getInt(res.getColumnIndex(REQUEST_STATUS_COLUMN_ID)),
-                    res.getString(res.getColumnIndex(REQUEST_STATUS_COLUMN_NAME)));
-            res.moveToNext();
-        }
-
-        db.close();
-
-        return requestStatuses;
-    }
-
-    /**
      * This method is used to get the request status name
      */
 
@@ -489,29 +332,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     /** APPLICATION STATUS TABLE **/
-
-    /**
-     * This method is used to get all application statuses
-     */
-
-    public HashMap<Integer, String> getApplicationStatuses() {
-        HashMap<Integer, String> applicationStatuses = new HashMap<Integer, String>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "SELECT * FROM " + APPLICATION_STATUS_TABLE_NAME, null );
-        res.moveToFirst();
-
-        while(res.isAfterLast() == false){
-            applicationStatuses.put(
-                    res.getInt(res.getColumnIndex(APPLICATION_STATUS_COLUMN_ID)),
-                    res.getString(res.getColumnIndex(APPLICATION_STATUS_COLUMN_NAME)));
-            res.moveToNext();
-        }
-
-        db.close();
-
-        return applicationStatuses;
-    }
 
     /**
      * This method is used to get the application status name
@@ -540,5 +360,44 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DELETE FROM "+ USER_ACCOUNT_TABLE_NAME);
         db.close();
+    }
+
+    /** NOTIFICATION **/
+
+    /**
+     * This method is used to check whether the notification is seen or not
+     */
+
+    public void saveSeenAcceptedApplication(String requestID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ACCEPTED_APPLICATION_COLUMN_REQUEST_ID, requestID);
+
+        db.insert(ACCEPTED_APPLICATION_TABLE_NAME, null, contentValues);
+        db.close();
+    }
+
+    /**
+     * This method is used to check is there any existed user in the user table
+     */
+
+    public boolean isNotificationCreatedBefore(int requestID) {
+        boolean result = false;
+
+        String selectQuery = "SELECT * FROM " + ACCEPTED_APPLICATION_TABLE_NAME + " WHERE " + ACCEPTED_APPLICATION_COLUMN_REQUEST_ID + " = " + requestID + "";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int cnt = cursor.getCount();
+        cursor.close();
+
+        if (cnt >= 1) {
+            result = true;
+        }
+
+        db.close();
+
+        return result;
     }
 }

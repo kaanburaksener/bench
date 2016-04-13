@@ -37,6 +37,7 @@
     <string name="delete_application_url">http://bench-kaanburaksener.rhcloud.com/application/delete_application.php</string>
     <string name="finalize_application_url">http://bench-kaanburaksener.rhcloud.com/application/finalize_application.php</string>
     <string name="get_user_applications_url">http://bench-kaanburaksener.rhcloud.com/application/get_user_applications.php</string>
+    <string name="check_application_results_url">http://bench-kaanburaksener.rhcloud.com/application/check_application_results.php</string>
 
     <string name="key_success">success</string>
     <string name="key_message">message</string>
@@ -48,13 +49,17 @@
     <string name="title_activity_main">Bench</string>
     <string name="title_activity_sign_in">Sign In</string>
     <string name="title_activity_sign_up">Sign Up</string>
+    <string name="title_application_history">My Applications</string>
+    <string name="title_request_history">My Requests</string>
+    <string name="title_edit_profile">Edit Profile</string>
+    <string name="title_view_applicants">Applicants</string>
+    <string name="title_my_profile">My Profile</string>
 
     //Fragment Titles
     <string name="title_browse_requests">Browse Requests</string>
     <string name="title_make_request">Make a Request</string>
-    <string name="title_my_profile">My Profile</string>
-    <string name="title_my_history">My History</string>
     <string name="title_my_account">My Account</string>
+
 
     <string name="action_settings">Settings</string>
 

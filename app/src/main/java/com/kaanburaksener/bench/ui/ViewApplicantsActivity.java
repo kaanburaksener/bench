@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,12 +27,13 @@ import java.util.List;
 /**
  * Created by kaanburaksener on 12/04/16.
  */
-public class ViewApplicantsActivity extends AppCompatActivity {
+public class ViewApplicantsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private List<Applicant> applicants;
     private ViewApplicantsAdapter adapter;
     private RecyclerView recList;
     private LinearLayoutManager llm;
     private Activity activity;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private int requestID;
 
     @Override
@@ -49,13 +51,26 @@ public class ViewApplicantsActivity extends AppCompatActivity {
 
     private void initializer() {
         setStatusBarColor();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_1,
+                R.color.refresh_progress_2,
+                R.color.refresh_progress_3);
         recList = (RecyclerView) findViewById(R.id.applicantList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         activity = this;
-        getApplicants();
+        swipeRefreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+                                        getApplicants();
+                                    }
+                                }
+        );
     }
 
     /**
@@ -74,14 +89,13 @@ public class ViewApplicantsActivity extends AppCompatActivity {
     }
 
     public void getApplicants(){
+        swipeRefreshLayout.setRefreshing(true);
+
         RequestApplicationHandler.performGetApplicants(requestID, activity.getApplicationContext(), new VolleyCallback() {
 
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 try {
-                    final ProgressDialog progressDialog = new ProgressDialog(getWindow().getContext());
-                    progressDialog.setMessage("Request is being processed...");
-                    progressDialog.show();
                     applicants = new ArrayList<Applicant>();
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -99,7 +113,7 @@ public class ViewApplicantsActivity extends AppCompatActivity {
 
                     adapter = new ViewApplicantsAdapter(requestID, applicants, activity, getApplicationContext(), getWindow().getContext());
                     recList.setAdapter(adapter);
-                    progressDialog.dismiss();
+                    swipeRefreshLayout.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -107,8 +121,18 @@ public class ViewApplicantsActivity extends AppCompatActivity {
 
             @Override
             public void onError(String msg) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    /**
+     * This method is called when swipe refresh is pulled down
+     */
+
+    @Override
+    public void onRefresh() {
+        getApplicants();
     }
 
     @Override

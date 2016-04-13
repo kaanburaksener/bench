@@ -127,6 +127,7 @@ public class RequestApplicationHandler {
                                     progressDialog.dismiss();
                                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(context, ApplicationHistoryActivity.class);
+                                    intent.putExtra("request id", -1); //-1 shows that ApplicationHistoryActivity is approached not by notification
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     context.startActivity(intent);
                                     activity.finish();

@@ -1,5 +1,6 @@
 package com.kaanburaksener.bench;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import com.android.debug.hv.ViewServer;
 
 import android.support.v4.view.ViewPager;
 
+import com.kaanburaksener.bench.service.ApplicationResultService;
 import com.kaanburaksener.bench.ui.adapter.ViewPagerAdapter;
 import com.kaanburaksener.bench.ui.SlidingTabLayout;
 
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
         ViewServer.get(this).addWindow(this);
+        startService();
     }
 
     @Override
@@ -111,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Method to start the service
+    public void startService() {
+        startService(new Intent(getBaseContext(), ApplicationResultService.class));
+    }
+
+    // Method to stop the service
+    public void stopService() {
+        stopService(new Intent(getBaseContext(), ApplicationResultService.class));
+    }
 
     @Override
     public void onDestroy() {

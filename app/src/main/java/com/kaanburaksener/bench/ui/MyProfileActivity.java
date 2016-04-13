@@ -70,7 +70,6 @@ public class MyProfileActivity extends AppCompatActivity {
     public void goEditProfileActivity(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);
         startActivity(intent);
-        finish();
     }
 
     @Override

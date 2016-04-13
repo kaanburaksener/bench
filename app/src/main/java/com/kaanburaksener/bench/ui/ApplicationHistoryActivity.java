@@ -2,8 +2,10 @@ package com.kaanburaksener.bench.ui;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,18 +29,26 @@ import java.util.List;
 /**
  * Created by kaanburaksener on 09/04/16.
  */
-public class ApplicationHistoryActivity extends AppCompatActivity {
+public class ApplicationHistoryActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private DBHandler dbHandler;
     private List<RequestApplication> applications;
     private ApplicationAdapter adapter;
     private RecyclerView recList;
     private LinearLayoutManager llm;
     private Activity activity;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private int requestID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_history);
+
+        // Getting attached intent data
+        Intent i = getIntent();
+        Bundle extras = getIntent().getExtras();
+        requestID = extras.getInt("request id");
+
         initializer();
     }
 
@@ -49,13 +59,27 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
     private void initializer() {
         setStatusBarColor();
         dbHandler = new DBHandler(this);
+        checkIncomingPage();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_1,
+                R.color.refresh_progress_2,
+                R.color.refresh_progress_3);
         recList = (RecyclerView) findViewById(R.id.applicationList);
         recList.setHasFixedSize(true);
         llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         activity = this;
-        getMyApplications();
+        swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(true);
+                    getMyApplications();
+                }
+            }
+        );
     }
 
     /**
@@ -74,14 +98,13 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
     }
 
     public void getMyApplications(){
+        swipeRefreshLayout.setRefreshing(true);
+
         RequestApplicationHandler.performGetUserApplications(dbHandler.getUserId(), activity.getApplicationContext(), new VolleyCallback() {
 
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 try {
-                    final ProgressDialog progressDialog = new ProgressDialog(activity.getWindow().getContext());
-                    progressDialog.setMessage("Request is being processed...");
-                    progressDialog.show();
                     applications = new ArrayList<RequestApplication>();
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -102,7 +125,7 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
 
                     adapter = new ApplicationAdapter(applications, activity, getApplicationContext(), getWindow().getContext());
                     recList.setAdapter(adapter);
-                    progressDialog.dismiss();
+                    swipeRefreshLayout.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -110,10 +133,25 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
 
             @Override
             public void onError(String msg) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
+    private void checkIncomingPage() {
+        if(requestID != -1) {
+            dbHandler.saveSeenAcceptedApplication(String.valueOf(requestID)); //Notification is seen and clicked
+        }
+    }
+
+    /**
+     * This method is called when swipe refresh is pulled down
+     */
+
+    @Override
+    public void onRefresh() {
+        getMyApplications();
+    }
 
     @Override
     protected void onDestroy() {
