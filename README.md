@@ -1,6 +1,6 @@
 # Bench
 
-One Paragraph of project description goes here
+Bench is an android based mobile application that enables its users to find a missing player in their team or to join other users' teams to spend their free time by playing soccer!
 
 ## Getting Started
 
