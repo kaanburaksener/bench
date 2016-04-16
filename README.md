@@ -1,4 +1,4 @@
-![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench.p)
+![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench.png)
 
 # Bench
 
