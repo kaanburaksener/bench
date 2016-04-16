@@ -1,5 +1,5 @@
 ![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
-# Bench
+# Bench v1.0
 
 Bench is an android based mobile application that enables its users to find a missing player for their team or to join other users' teams to spend their free time by playing soccer! The Bench is specially developed for Twilio.
 
@@ -25,72 +25,15 @@ Android version 5.0 (Lollipop) or a newer version
 
 ## Screenshots
 
-![Splash Screem](https://github.com/kaanburaksener/bench/blob/master/screenshots/splash_screen.png)
+![Splash Screen](https://github.com/kaanburaksener/bench/blob/master/screenshots/splash_screen.png = 400x)
 
-See more at [screenshots](http:/github.com/kaanburaksener/bench/screenshots/)
+See more at [screenshots](https://github.com/kaanburaksener/bench/blob/master/screenshots/)
 
-```
-Give the example
-```
+## Used Libraries
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* Dropwizard - Bla bla bla
-* Maven - Maybe
-* Atom - ergaerga
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+- Volley
+- Twilio Ip Messaging API
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
