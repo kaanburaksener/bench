@@ -25,7 +25,7 @@ Android version 5.0 (Lollipop) or a newer version
 
 ## Screenshots
 
-![Splash Screem](http:/github.com/kaanburaksener/bench/screenshots/splash_screen.png)
+![Splash Screem](https://github.com/kaanburaksener/bench/blob/master/screenshots/splash_screen.png)
 
 See more at [screenshots](http:/github.com/kaanburaksener/bench/screenshots/)
 
