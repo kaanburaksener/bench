@@ -1,5 +1,6 @@
 # Bench v1.0
 ![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
+
 Bench is an android based mobile application that enables its users to find a missing player for their team or to join other users' teams to spend their free time by playing soccer! The Bench is specially developed for Twilio.
 
 ## Installing
