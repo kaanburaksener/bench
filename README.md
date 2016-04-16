@@ -25,7 +25,7 @@ Android version 5.0 (Lollipop) or a newer version
 
 ## Screenshots
 
-![Splash Screen](https://github.com/kaanburaksener/bench/blob/master/screenshots/splash_screen.png =400x)
+<img src="https://github.com/kaanburaksener/bench/blob/master/screenshots/splash_screen.png" width="400px">
 
 See more at [screenshots](https://github.com/kaanburaksener/bench/blob/master/screenshots/)
 
