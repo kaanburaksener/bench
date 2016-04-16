@@ -1,15 +1,12 @@
 package com.kaanburaksener.bench.ui.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.callback.VolleyCallback;
@@ -49,6 +46,7 @@ public class BrowseRequestsFragment extends BaseFragment implements SwipeRefresh
     }
 
     private void initializer(View v) {
+        requests = new ArrayList<Request>();
         dbHandler = new DBHandler(mainActivity);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -61,15 +59,21 @@ public class BrowseRequestsFragment extends BaseFragment implements SwipeRefresh
         llm = new LinearLayoutManager(mainActivity);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+        adapter = new RequestAdapter(requests, mainActivity, mainActivity.getApplicationContext(), mainActivity.getWindow().getContext());
+        recList.setAdapter(adapter);
         swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(true);
-                    getOpenedRequests();
-                }
-            }
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+                                        getOpenedRequests();
+                                    }
+                                }
         );
     }
+
+    /**
+     * This function is used to list the opened request by other users
+     */
 
     public void getOpenedRequests(){
         swipeRefreshLayout.setRefreshing(true);
@@ -79,22 +83,26 @@ public class BrowseRequestsFragment extends BaseFragment implements SwipeRefresh
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 try {
-                    requests = new ArrayList<Request>();
+                    JSONObject response = (JSONObject) jsonArray.get(0);
+                    int id = Integer.valueOf(response.getString("id"));
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject request = (JSONObject) jsonArray.get(i);
-                        com.kaanburaksener.bench.core.Request req = new com.kaanburaksener.bench.core.Request();
+                    if(id != -1) {
+                        requests.clear();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject request = (JSONObject) jsonArray.get(i);
+                            com.kaanburaksener.bench.core.Request req = new com.kaanburaksener.bench.core.Request();
 
-                        req.setID(Integer.parseInt(request.getString("id")));
-                        req.setTitle(request.getString("title"));
-                        req.setDescription(request.getString("description"));
-                        req.setLocation(request.getString("location"));
-                        req.setPlayerPosition(dbHandler.getPlayerPositionName(Integer.parseInt(request.getString("player_position_id"))));
-                        req.setTime(request.getString("time"));
-                        req.setStatus("Opened");
-                        req.setOwnerName(request.getString("request_owner_name"));
+                            req.setID(Integer.parseInt(request.getString("id")));
+                            req.setTitle(request.getString("title"));
+                            req.setDescription(request.getString("description"));
+                            req.setLocation(request.getString("location"));
+                            req.setPlayerPosition(dbHandler.getPlayerPositionName(Integer.parseInt(request.getString("player_position_id"))));
+                            req.setTime(request.getString("time"));
+                            req.setStatus("Opened");
+                            req.setOwnerName(request.getString("request_owner_name"));
 
-                        requests.add(req);
+                            requests.add(req);
+                        }
                     }
 
                     adapter = new RequestAdapter(requests, mainActivity, mainActivity.getApplicationContext(), mainActivity.getWindow().getContext());

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.android.debug.hv.ViewServer;
 
 import android.support.v4.view.ViewPager;
 
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializer();
+        startService();
     }
 
     /**
@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-        ViewServer.get(this).addWindow(this);
-        startService();
     }
 
     @Override
@@ -119,21 +117,14 @@ public class MainActivity extends AppCompatActivity {
         startService(new Intent(getBaseContext(), ApplicationResultService.class));
     }
 
-    // Method to stop the service
-    public void stopService() {
-        stopService(new Intent(getBaseContext(), ApplicationResultService.class));
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ViewServer.get(this).removeWindow(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ViewServer.get(this).removeWindow(this);
     }
 
     public void setActionBarTitle(String title) {

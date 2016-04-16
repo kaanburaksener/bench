@@ -43,10 +43,11 @@ public class MakeRequestFragment extends BaseFragment {
     private String title;
     private String description;
     private String location;
-    private String date;
-    private String time;
+    private String date = "";
+    private String time = "";
     private String playerPosition;
     private String dt = ""; //DateTime Format
+
     private int ownerID;
     private int statusID = 1; //Opened as default
     private int playerPositionID;
@@ -137,7 +138,7 @@ public class MakeRequestFragment extends BaseFragment {
         } else if (location.isEmpty()) {
             result = false;
             Toast.makeText(getActivity().getApplicationContext(), "Location is empty", Toast.LENGTH_SHORT).show();
-        } else if (dt .isEmpty()) {
+        } else if (dt.isEmpty() || dt == null) {
             result = false;
             Toast.makeText(getActivity().getApplicationContext(), "Date is empty", Toast.LENGTH_SHORT).show();
         }
@@ -177,18 +178,14 @@ public class MakeRequestFragment extends BaseFragment {
 
     private void showDatePicker() {
         DatePickerFragment date = new DatePickerFragment();
-        /**
-         * Set Up Current Date Into dialog
-         */
+
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt("year", calender.get(Calendar.YEAR));
         args.putInt("month", calender.get(Calendar.MONTH));
         args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
         date.setArguments(args);
-        /**
-         * Set Call back to capture selected date
-         */
+
         date.setCallBack(ondate);
         date.show(getFragmentManager(), "Date Picker");
     }
@@ -199,17 +196,13 @@ public class MakeRequestFragment extends BaseFragment {
 
     private void showTimePicker() {
         TimePickerFragment time = new TimePickerFragment();
-        /**
-         * Set Up Current Date Into dialog
-         */
+
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt("hour", calender.get(Calendar.HOUR_OF_DAY));
         args.putInt("minute", calender.get(Calendar.MINUTE));
         time.setArguments(args);
-        /**
-         * Set Call back to capture selected date
-         */
+
         time.setCallBack(ontime);
         time.show(getFragmentManager(), "Time Picker");
     }
@@ -221,8 +214,8 @@ public class MakeRequestFragment extends BaseFragment {
     OnDateSetListener ondate = new OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            monthOfYear++;
-            String month = String.valueOf(monthOfYear); //Months are indexed from 0 to 11
+            monthOfYear++; //Months are indexed from 0 to 11
+            String month = String.valueOf(monthOfYear);
             String day = String.valueOf(dayOfMonth);
 
             if(monthOfYear < 10) {

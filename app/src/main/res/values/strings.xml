@@ -12,7 +12,16 @@
     <string name="edit">Edit</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
+    <string name="update">Update</string>
+    <string name="start_a_chat">Start a Chat</string>
+    <string name="view_applicants">View Applicants</string>
+    <string name="close">Close</string>
     <string name="my_profile">My Profile</string>
+    <string name="user_name">User Name</string>
+    <string name="birthday">Birthday</string>
+    <string name="owner">Owner</string>
+    <string name="application_status">Application Status</string>
+    <string name="request_status">Request Status</string>
     <string name="history_requests">History / Requests</string>
     <string name="history_applications">History / Applications</string>
     <string name="create_an_account">Create an Account</string>
@@ -39,8 +48,14 @@
     <string name="get_user_applications_url">http://bench-kaanburaksener.rhcloud.com/application/get_user_applications.php</string>
     <string name="check_application_results_url">http://bench-kaanburaksener.rhcloud.com/application/check_application_results.php</string>
 
+    <string name="check_chat_requests_url">http://bench-kaanburaksener.rhcloud.com/chat/check_chat_requests.php</string>
+    <string name="make_chat_request_url">http://bench-kaanburaksener.rhcloud.com/chat/make_chat_request.php</string>
+    <string name="update_chat_status_url">http://bench-kaanburaksener.rhcloud.com/chat/update_chat_status.php</string>
+
     <string name="key_success">success</string>
     <string name="key_message">message</string>
+    <string name="key_token">token</string>
+
     <string name="signup_success">You are successfully registered!</string>
     <string name="email_exists">This email is already being used!</string>
     <string name="invalid_signin">Please check your email and password and try again!</string>
@@ -73,4 +88,66 @@
     <string name="player_position">Player Position</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+
+    <!-- Twilio -->
+
+    <string name="add_chat_room">Add Chat Room</string>
+    <string name="send">Send</string>
+    <string name="author">Author</string>
+    <string name="hello">Hello</string>
+    <string name="status_message">Status Message</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_main_chat">General Chat Room</string>
+    <string name="username_placeholder">username</string>
+    <string name="password_placeholder">password</string>
+    <string name="full_name_placeholder">full name</string>
+    <string name="email_placeholder">email address</string>
+    <string name="twilio_first_line">A simple chat app built using the</string>
+    <string name="twilio_second_line">Twilio IP Messaging API</string>
+    <string name="login_all_fields_required">All fields are required</string>
+    <string name="login_user_progress_message">signing in…</string>
+    <string name="register_user_progress_message">registering user…</string>
+
+    <!-- Strings related to forgot password -->
+    <string name="forgot_password_message">
+        That\'s okay. Just enter your email and we\'ll send you a link to reset your password.
+    </string>
+    <string name="forgot_password_send_button_text">Send</string>
+    <string name="forgot_password_go_back_button_text">\u003c Go back</string>
+    <string name="forgot_password_email_required">
+        You must provide a registered email address to start the recovery process
+    </string>
+    <string name="forgot_password_progress_message">recovering password…</string>
+    <string name="forgot_password_success_message">
+        We have sent you an email to start the password recovery process
+    </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="logout_text">Logout</string>
+
+    <string name="logout_prompt_message">Are you sure you want to logout?</string>
+    <string name="action_leave_channel">Leave channel</string>
+    <string name="action_delete_channel">Delete channel</string>
+    <string name="message_elipses">Say something</string>
+    <string name="logo_text">logo</string>
+    <string name="login_button_text">Login</string>
+    <string name="register_button_text">Register</string>
+    <string name="forgot_password_button_text">Forgot your password?</string>
+    <string name="create_account_button_text">Create an account</string>
+    <string name="back_to_login_button_text">Back to login</string>
+    <string name="image_text">image</string>
+
+    <string name="default_channel_name">General Chat Room</string>
+    <string name="default_channel_unique_name">general</string>
+    <string name="new_channel_prompt">Enter a name for the new channel:</string>
+    <string name="generic_error">An error occurred, please try again</string>
+    <string name="message_deletion_forbidden">You cannot delete this channel</string>
+    <string name="loading_channels_message">Loading channel information</string>
+    <string name="channel_name_required_message">Channel name cannot be empty</string>
+    <string name="channel_delete_prompt_message">Are you sure you want to delete this channel?</string>
+    <string name="channel_name_equals_default_name">You cannot create a channel with the default channel\'s name</string>
+
 </resources>

@@ -3,6 +3,7 @@ package com.kaanburaksener.bench.core;
 /**
  * Created by kaanburaksener on 02/04/16.
  */
+
 public class RequestApplication {
     private int applicantID;
     private int applicationStatusID;
@@ -15,30 +16,6 @@ public class RequestApplication {
     private String time;
     private String requestStatus;
     private String ownerName;
-
-    public RequestApplication(int applicantID,
-                              int applicationStatusID,
-                              int ownerID,
-                              int requestID,
-                              String applicationStatus,
-                              String title,
-                              String location,
-                              String playerPosition,
-                              String time,
-                              String requestStatus,
-                              String ownerName){
-        this.applicantID = applicantID;
-        this.applicationStatusID = applicationStatusID;
-        this.ownerID = ownerID;
-        this.requestID = requestID;
-        this.applicationStatus = applicationStatus;
-        this.title = title;
-        this.location = location;
-        this.playerPosition = playerPosition;
-        this.time = time;
-        this.requestStatus = requestStatus;
-        this.ownerName = ownerName;
-    }
 
     public RequestApplication(){}
 

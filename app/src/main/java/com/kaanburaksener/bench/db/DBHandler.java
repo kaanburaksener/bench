@@ -249,6 +249,26 @@ public class DBHandler extends SQLiteOpenHelper {
         return Integer.parseInt(id);
     }
 
+    /**
+     * This method is used to get the user id
+     */
+
+    public String getUserName(){
+        String name = "";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(USER_ACCOUNT_TABLE_NAME, new String[]{USER_ACCOUNT_COLUMN_NAME}, null, null, null, null, null, null);
+
+        if (c.moveToFirst()) {
+            name = c.getString(0);
+        }
+
+        c.close();
+        db.close();
+
+        return name;
+    }
+
     /** PLAYER POSITION TABLE FUNCTIONS **/
 
     /**
@@ -399,5 +419,11 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
         return result;
+    }
+
+    public void deleteNotifiedAcceptedApplication(int requestID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ACCEPTED_APPLICATION_TABLE_NAME, ACCEPTED_APPLICATION_COLUMN_REQUEST_ID + " = ? ", new String[]{String.valueOf(requestID)});
+        db.close();
     }
 }

@@ -3,13 +3,13 @@
     package="com.kaanburaksener.bench" >
 
     <application
-        android:name=".handler.AppController"
+        android:name="com.twilio.twiliochat.application.TwilioChatApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.InitialActivity"
+            android:name=".ui.activity.InitialActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
@@ -20,14 +20,21 @@
         </activity>
 
         <activity
-            android:name=".ui.SigninActivity"
+            android:name=".ui.activity.SplashActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
         </activity>
 
         <activity
-            android:name=".ui.SignupActivity"
+            android:name=".ui.activity.SigninActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".ui.activity.SignupActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
@@ -41,39 +48,51 @@
         </activity>
 
         <activity
-            android:name=".ui.RequestHistoryActivity"
+            android:name=".ui.activity.RequestHistoryActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/title_request_history" >
         </activity>
 
         <activity
-            android:name=".ui.ApplicationHistoryActivity"
+            android:name=".ui.activity.ApplicationHistoryActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/title_application_history" >
         </activity>
 
         <activity
-            android:name=".ui.MyProfileActivity"
+            android:name=".ui.activity.MyProfileActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/title_my_profile" >
         </activity>
 
         <activity
-            android:name=".ui.ViewApplicantsActivity"
+            android:name=".ui.activity.ViewApplicantsActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/title_view_applicants" >
         </activity>
 
         <activity
-            android:name=".ui.EditProfileActivity"
+            android:name=".ui.activity.EditProfileActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="@string/title_edit_profile" >
         </activity>
+
+        <activity
+            android:name="com.twilio.twiliochat.activities.MainChatActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_main_chat" >
+        </activity>
+
+        <service
+            android:name="com.twilio.ipmessaging.TwilioIPMessagingClientService"
+            android:exported="false" />
 
         <service android:name=".service.ApplicationResultService" />
 
@@ -90,5 +109,8 @@
 
     <!--  Internet Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 </manifest>

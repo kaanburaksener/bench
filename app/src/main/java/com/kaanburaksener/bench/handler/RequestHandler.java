@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.kaanburaksener.bench.callback.VolleyCallback;
 import com.kaanburaksener.bench.MainActivity;
 import com.kaanburaksener.bench.R;
+import com.kaanburaksener.bench.ui.activity.RequestHistoryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,8 +33,6 @@ import java.util.Map;
  */
 
 public class RequestHandler {
-    public RequestHandler() {}
-
     public static void performCreateNewRequest (final String title,
                                                 final String description,
                                                 final String location,
@@ -57,7 +55,6 @@ public class RequestHandler {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("New Request Response: ",response);
                             JSONObject res = new JSONObject(response);
 
                             if (res.getString(context.getResources().getString(R.string.key_success)) != null) {
@@ -101,7 +98,6 @@ public class RequestHandler {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<>();
 
-                // the POST parameters:
                 params.put("title", title);
                 params.put("description", description);
                 params.put("location", location);
@@ -132,7 +128,6 @@ public class RequestHandler {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("Close Response:", response);
                             JSONObject res = new JSONObject(response);
 
                             if (res.getString(context.getResources().getString(R.string.key_success)) != null) {
@@ -142,7 +137,7 @@ public class RequestHandler {
                                 if (success == 1) {
                                     progressDialog.dismiss();
                                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(context, MainActivity.class);
+                                    Intent intent = new Intent(context, RequestHistoryActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     context.startActivity(intent);
                                     activity.finish();

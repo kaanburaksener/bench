@@ -3,11 +3,9 @@ package com.kaanburaksener.bench.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,7 +14,6 @@ import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.core.Request;
 import com.kaanburaksener.bench.db.DBHandler;
 import com.kaanburaksener.bench.handler.RequestApplicationHandler;
-import com.kaanburaksener.bench.handler.RequestHandler;
 
 /**
  * Created by kaanburaksener on 08/04/16.
@@ -43,23 +40,25 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
     @Override
     public void onBindViewHolder(RequestViewHolder requestViewHolder, int i) {
-        Request request = requestList.get(i);
-        requestViewHolder.vTitle.setText(request.getTitle());
-        requestViewHolder.vDescription.setText(request.getDescription());
-        requestViewHolder.vLocation.setText(request.getLocation());
-        requestViewHolder.vPlayerPosition.setText(request.getPlayerPosition());
-        requestViewHolder.vTime.setText(request.getTime());
-        requestViewHolder.vStatus.setText(request.getStatus());
-        requestViewHolder.vOwner.setText(request.getOwnerName());
-        final int requestID = request.getID();
-        final int userID = dbHandler.getUserId();
+        if(!requestList.isEmpty()) {
+            Request request = requestList.get(i);
+            requestViewHolder.vTitle.setText(request.getTitle());
+            requestViewHolder.vDescription.setText(request.getDescription());
+            requestViewHolder.vLocation.setText(request.getLocation());
+            requestViewHolder.vPlayerPosition.setText(request.getPlayerPosition());
+            requestViewHolder.vTime.setText(request.getTime());
+            requestViewHolder.vStatus.setText(request.getStatus());
+            requestViewHolder.vOwner.setText(request.getOwnerName());
+            final int requestID = request.getID();
+            final int userID = dbHandler.getUserId();
 
-        requestViewHolder.vApplyRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RequestApplicationHandler.performCreateRequestApplication(requestID, userID, activity, context, windowContext);
-            }
-        });
+            requestViewHolder.vApplyRequestButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RequestApplicationHandler.performCreateRequestApplication(requestID, userID, activity, context, windowContext);
+                }
+            });
+        }
     }
 
     @Override

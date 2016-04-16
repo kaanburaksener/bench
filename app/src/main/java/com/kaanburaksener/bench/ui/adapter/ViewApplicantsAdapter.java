@@ -2,8 +2,8 @@ package com.kaanburaksener.bench.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +12,14 @@ import android.widget.TextView;
 
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.core.Applicant;
-import com.kaanburaksener.bench.core.User;
 import com.kaanburaksener.bench.db.DBHandler;
+import com.kaanburaksener.bench.handler.ChatRequestHandler;
 import com.kaanburaksener.bench.handler.RequestApplicationHandler;
+import com.twilio.twiliochat.activities.MainChatActivity;
+import com.twilio.twiliochat.application.TwilioChatApplication;
+import com.twilio.twiliochat.interfaces.LoginListener;
+import com.twilio.twiliochat.ipmessaging.IPMessagingClientManager;
+import com.twilio.twiliochat.util.SessionManager;
 
 import java.util.List;
 
@@ -28,6 +33,7 @@ public class ViewApplicantsAdapter extends RecyclerView.Adapter<ViewApplicantsAd
     private Context windowContext;
     private DBHandler dbHandler;
     private final int requestID;
+    private IPMessagingClientManager messagingClient;
 
     public ViewApplicantsAdapter(int requestID, List<Applicant> applicantList, Activity activity, Context context, Context windowContext) {
         this.applicantList = applicantList;
@@ -45,35 +51,63 @@ public class ViewApplicantsAdapter extends RecyclerView.Adapter<ViewApplicantsAd
 
     @Override
     public void onBindViewHolder(ApplicantViewHolder applicantViewHolder, int i) {
-        Applicant applicant = applicantList.get(i);
-        applicantViewHolder.vName.setText(applicant.getName());
-        applicantViewHolder.vLocation.setText(applicant.getLocation());
-        applicantViewHolder.vBirthday.setText(applicant.getBirthday());
-        applicantViewHolder.vApplicationStatus.setText(dbHandler.getApplicationStatusName(applicant.getApplicationStatusID()));
-        final int userID = applicant.getUserID();
+        if(!applicantList.isEmpty()) {
+            Applicant applicant = applicantList.get(i);
+            applicantViewHolder.vName.setText(applicant.getName());
+            applicantViewHolder.vLocation.setText(applicant.getLocation());
+            applicantViewHolder.vBirthday.setText(applicant.getBirthday());
+            applicantViewHolder.vApplicationStatus.setText(dbHandler.getApplicationStatusName(applicant.getApplicationStatusID()));
+            final int userID = applicant.getUserID();
+            final int starterID = dbHandler.getUserId();
+            final int applicationStatus = applicant.getApplicationStatusID();
 
-        if(applicant.getApplicationStatusID() != 1) {
-            applicantViewHolder.vDivider.setVisibility(View.GONE);
-            applicantViewHolder.vButtonHolder.setVisibility(View.GONE);
-        } else if(applicant.getApplicationStatusID() == 2) {
-            //Chat starts here!
-        } else {
-            applicantViewHolder.vAcceptButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int applicationStatusID = 2; //Accepted
-                    RequestApplicationHandler.performFinalizeRequestApplication(requestID, userID, applicationStatusID, activity, context, windowContext);
-                    // Service should inform the applicant about his / her application is accepted!
-                }
-            });
+            if(applicationStatus == 1) {
+                applicantViewHolder.vStartChatButton.setVisibility(View.GONE);
 
-            applicantViewHolder.vRejectButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int applicationStatusID = 3; //Rejected
-                    RequestApplicationHandler.performFinalizeRequestApplication(requestID, userID, applicationStatusID, activity, context, windowContext);
-                }
-            });
+                applicantViewHolder.vAcceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int applicationStatusID = 2; //Accepted
+                        RequestApplicationHandler.performFinalizeRequestApplication(requestID, userID, applicationStatusID, activity, context, windowContext);
+                    }
+                });
+
+                applicantViewHolder.vRejectButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int applicationStatusID = 3; //Rejected
+                        RequestApplicationHandler.performFinalizeRequestApplication(requestID, userID, applicationStatusID, activity, context, windowContext);
+                    }
+                });
+            } else if(applicationStatus == 2) {
+                applicantViewHolder.vRejectButton.setVisibility(View.GONE);
+                applicantViewHolder.vAcceptButton.setVisibility(View.GONE);
+
+                applicantViewHolder.vStartChatButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ChatRequestHandler.performMakeChatRequest(starterID, userID, requestID, context);
+                        messagingClient = TwilioChatApplication.get().getIPMessagingClient();
+                        SessionManager.getInstance().createLoginSession(dbHandler.getUserName());
+                        messagingClient.connectClient(new LoginListener() {
+                            @Override
+                            public void onLoginFinished() {
+                                final Intent intent = new Intent(context, MainChatActivity.class);
+                                intent.putExtra("incoming class", 0);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
+                            }
+
+                            @Override
+                            public void onLoginError(String errorMessage) {
+                            }
+                        });
+                    }
+                });
+            } else if (applicationStatus == 3){
+                applicantViewHolder.vDivider.setVisibility(View.GONE);
+                applicantViewHolder.vButtonHolder.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -94,6 +128,7 @@ public class ViewApplicantsAdapter extends RecyclerView.Adapter<ViewApplicantsAd
         protected TextView vAcceptButton;
         protected TextView vRejectButton;
         protected LinearLayout vButtonHolder;
+        protected TextView vStartChatButton;
         protected View vDivider;
 
         public ApplicantViewHolder(View v) {
@@ -106,6 +141,7 @@ public class ViewApplicantsAdapter extends RecyclerView.Adapter<ViewApplicantsAd
             vRejectButton = (TextView) v.findViewById(R.id.rejectButton);
             vButtonHolder = (LinearLayout) v.findViewById(R.id.buttonHolder);
             vDivider = (View) v.findViewById(R.id.divider);
+            vStartChatButton = (TextView) v.findViewById(R.id.startChatButton);
         }
     }
 }

@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.core.Request;
-import com.kaanburaksener.bench.handler.RequestApplicationHandler;
 import com.kaanburaksener.bench.handler.RequestHandler;
-import com.kaanburaksener.bench.ui.RequestHistoryActivity;
-import com.kaanburaksener.bench.ui.ViewApplicantsActivity;
+import com.kaanburaksener.bench.ui.activity.ViewApplicantsActivity;
 
 import java.util.List;
 
@@ -42,37 +40,38 @@ public class OwnedRequestAdapter extends RecyclerView.Adapter<OwnedRequestAdapte
 
     @Override
     public void onBindViewHolder(OwnedRequestViewHolder requestViewHolder, int i) {
-        final Request request = requestList.get(i);
-        requestViewHolder.vTitle.setText(request.getTitle());
-        requestViewHolder.vDescription.setText(request.getDescription());
-        requestViewHolder.vLocation.setText(request.getLocation());
-        requestViewHolder.vPlayerPosition.setText(request.getPlayerPosition());
-        requestViewHolder.vTime.setText(request.getTime());
-        requestViewHolder.vStatus.setText(request.getStatus());
-        final int requestID = request.getID();
-        final int statusID = request.getStatusID();
+        if(!requestList.isEmpty()) {
+            final Request request = requestList.get(i);
+            requestViewHolder.vTitle.setText(request.getTitle());
+            requestViewHolder.vDescription.setText(request.getDescription());
+            requestViewHolder.vLocation.setText(request.getLocation());
+            requestViewHolder.vPlayerPosition.setText(request.getPlayerPosition());
+            requestViewHolder.vTime.setText(request.getTime());
+            requestViewHolder.vStatus.setText(request.getStatus());
+            final int requestID = request.getID();
+            final int statusID = request.getStatusID();
 
-        if(statusID == 2) {
-            requestViewHolder.vButtonHolder.setVisibility(View.GONE);
-            requestViewHolder.vDivider.setVisibility(View.GONE);
-        } else {
-            requestViewHolder.vCloseRequestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    RequestHandler.performCloseRequest(requestID, activity, context, windowContext);
-                }
-            });
+            if(statusID == 2) {
+                requestViewHolder.vButtonHolder.setVisibility(View.GONE);
+                requestViewHolder.vDivider.setVisibility(View.GONE);
+            } else {
+                requestViewHolder.vCloseRequestButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RequestHandler.performCloseRequest(requestID, activity, context, windowContext);
+                    }
+                });
 
-            requestViewHolder.vViewApplicantsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ViewApplicantsActivity.class);
-                    intent.putExtra("request_id", requestID);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                    activity.finish();
-                }
-            });
+                requestViewHolder.vViewApplicantsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ViewApplicantsActivity.class);
+                        intent.putExtra("request_id", requestID);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                });
+            }
         }
     }
 

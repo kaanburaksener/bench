@@ -32,11 +32,12 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/user_name"
                 android:elevation="1dp"
                 android:layout_marginLeft="2dp"
                 android:textSize="20sp"
-                android:text="User Name"/>
+                android:text="@string/user_name"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </FrameLayout>

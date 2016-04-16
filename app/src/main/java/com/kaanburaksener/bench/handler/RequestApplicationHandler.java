@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,8 +16,8 @@ import com.android.volley.toolbox.Volley;
 import com.kaanburaksener.bench.MainActivity;
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.callback.VolleyCallback;
-import com.kaanburaksener.bench.ui.ApplicationHistoryActivity;
-import com.kaanburaksener.bench.ui.RequestHistoryActivity;
+import com.kaanburaksener.bench.ui.activity.ApplicationHistoryActivity;
+import com.kaanburaksener.bench.ui.activity.RequestHistoryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +47,6 @@ public class RequestApplicationHandler {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("New App Response:", response);
                             JSONObject res = new JSONObject(response);
 
                             if (res.getString(context.getResources().getString(R.string.key_success)) != null) {
@@ -89,7 +87,6 @@ public class RequestApplicationHandler {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<>();
 
-                // the POST parameters:
                 params.put("request_id", new Integer(requestID).toString());
                 params.put("applicant_user_id", new Integer(applicantUserID).toString());
 
@@ -116,7 +113,6 @@ public class RequestApplicationHandler {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("Cancellation Response:", response);
                             JSONObject res = new JSONObject(response);
 
                             if (res.getString(context.getResources().getString(R.string.key_success)) != null) {
@@ -158,7 +154,6 @@ public class RequestApplicationHandler {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<>();
 
-                // the POST parameters:
                 params.put("request_id", new Integer(requestID).toString());
                 params.put("applicant_user_id", new Integer(applicantUserID).toString());
 
@@ -210,7 +205,6 @@ public class RequestApplicationHandler {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("Final Response:", response);
                             JSONObject res = new JSONObject(response);
 
                             if (res.getString(context.getResources().getString(R.string.key_success)) != null) {
@@ -251,7 +245,6 @@ public class RequestApplicationHandler {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<>();
 
-                // the POST parameters:
                 params.put("request_id", new Integer(requestID).toString());
                 params.put("applicant_user_id", new Integer(applicantUserID).toString());
                 params.put("application_status_id", new Integer(applicationStatusID).toString());

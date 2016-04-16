@@ -3,24 +3,19 @@ package com.kaanburaksener.bench.ui.fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kaanburaksener.bench.MainActivity;
 import com.kaanburaksener.bench.R;
 import com.kaanburaksener.bench.db.DBHandler;
 import com.kaanburaksener.bench.core.User;
-import com.kaanburaksener.bench.ui.ApplicationHistoryActivity;
-import com.kaanburaksener.bench.ui.InitialActivity;
-import com.kaanburaksener.bench.ui.MyProfileActivity;
-import com.kaanburaksener.bench.ui.RequestHistoryActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.kaanburaksener.bench.service.ApplicationResultService;
+import com.kaanburaksener.bench.ui.activity.ApplicationHistoryActivity;
+import com.kaanburaksener.bench.ui.activity.InitialActivity;
+import com.kaanburaksener.bench.ui.activity.MyProfileActivity;
+import com.kaanburaksener.bench.ui.activity.RequestHistoryActivity;
 
 /**
  * Created by kaanburaksener on 31/03/16.
@@ -29,13 +24,14 @@ import java.util.List;
 public class MyAccountFragment extends BaseFragment {
     private DBHandler dbHandler;
     private User user;
-    private int userID;
 
     private TextView userName;
     private TextView myProfile;
     private TextView applicationHistory;
     private TextView requestHistory;
     private TextView signOut;
+
+    private int userID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,9 +41,7 @@ public class MyAccountFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_my_account, container, false);
-
         initializer(v);
-
         return v;
     }
 
@@ -75,7 +69,7 @@ public class MyAccountFragment extends BaseFragment {
     }
 
     /**
-     * This class is used to detect gesture and routing between activities
+     * This class is used to redirect the user to other pages and perform sign out request
      */
 
     View.OnClickListener router = new View.OnClickListener() {
@@ -87,7 +81,7 @@ public class MyAccountFragment extends BaseFragment {
                     break;
                 case R.id.applicationHistory:
                     Intent i2 = new Intent(mainActivity.getApplicationContext(), ApplicationHistoryActivity.class);
-                    i2.putExtra("request id", -1); //-1 shows that ApplicationHistoryActivity is approached not by notification
+                    i2.putExtra("request id", -1); //-1 represents that ApplicationHistoryActivity is not approached by notification
                     startActivity(i2);
                     break;
                 case R.id.requestHistory:

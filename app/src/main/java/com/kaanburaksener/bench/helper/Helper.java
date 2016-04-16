@@ -1,8 +1,5 @@
 package com.kaanburaksener.bench.helper;
 
-import android.app.Activity;
-import android.content.Context;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,10 +7,6 @@ import java.util.regex.Pattern;
  * Created by kaanburaksener on 01/04/16.
  */
 public class Helper {
-    private Context context;
-    private Activity activity;
-
-    public Helper(){}
 
     /**
      * This function is used to check the validity of the input entered as email

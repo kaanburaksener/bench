@@ -2,7 +2,6 @@ package com.kaanburaksener.bench.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -31,7 +30,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             R.drawable.ic_my_account
     };
 
-    // Build a Constructor and assign the passed Values to appropriate values in the class
     public ViewPagerAdapter(FragmentManager fragmentManager, int numbOfTabs, Context context) {
         super(fragmentManager);
         this.fragmentManager = fragmentManager;
@@ -39,7 +37,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         this.numbOfTabs = numbOfTabs;
     }
 
-    //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
         if(position == 0) {
@@ -54,7 +51,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-    // This method return the titles for the Tabs in the Tab Strip
     @Override
     public CharSequence getPageTitle(int position) {
         Drawable image = ContextCompat.getDrawable(context, ICONS[position]);
@@ -65,7 +61,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         return sb;
     }
 
-    // This method return the Number of tabs for the tabs Strip
     @Override
     public int getCount() {
         return numbOfTabs;

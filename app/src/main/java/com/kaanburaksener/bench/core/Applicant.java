@@ -3,6 +3,7 @@ package com.kaanburaksener.bench.core;
 /**
  * Created by kaanburaksener on 12/04/16.
  */
+
 public class Applicant {
     private int userID;
     private String name;

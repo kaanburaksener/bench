@@ -19,7 +19,6 @@ public class Request implements Serializable {
     private String ownerName;
     private String createdAt;
 
-    //This constructor is for external requests
     public Request(int id, String title, String description, String location, String playerPosition, String time, int statusID, String status, int ownerID, String ownerName, String createdAt){
         this.id = id;
         this.title = title;
