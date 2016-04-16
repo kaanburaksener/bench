@@ -1,6 +1,5 @@
-![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
-
 # Bench
+![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
 
 Bench is an android based mobile application that enables its users to find a missing player in their team or to join other users' teams to spend their free time by playing soccer!
 
