@@ -1,6 +1,5 @@
-![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
 # Bench v1.0
-
+![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
 Bench is an android based mobile application that enables its users to find a missing player for their team or to join other users' teams to spend their free time by playing soccer! The Bench is specially developed for Twilio.
 
 ## Installing
@@ -31,9 +30,5 @@ See more at [screenshots](https://github.com/kaanburaksener/bench/blob/master/sc
 
 ## Used Libraries
 
-- Volley
-- Twilio Ip Messaging API
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+- [Twilio IP Messaging API](https://github.com/TwilioDevEd/twiliochat-android)
+- [Volley](http://developer.android.com/training/volley/index.html)
