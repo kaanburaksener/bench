@@ -1,25 +1,27 @@
 ![Bench Logo](http://bench-kaanburaksener.rhcloud.com/img/bench_logo.png)
 # Bench
 
-Bench is an android based mobile application that enables its users to find a missing player in their team or to join other users' teams to spend their free time by playing soccer!
+Bench is an android based mobile application that enables its users to find a missing player for their team or to join other users' teams to spend their free time by playing soccer! The Bench is specially developed for Twilio.
 
-## Getting Started
+## Installing
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+To install the bench to your android phones:
 
-### Prerequisities
+1. Download bench.apk file, which is located inside the apk folder, to your phones.
+2. Install the bench.apk file
 
-What things you need to install the software and how to install them
+## Requirements
 
-```
-Give examples
-```
+Android version 5.0 (Lollipop) or a newer version
 
-### Installing
+## Feautures
 
-A step by step series of examples that tell you have to get a development env running
-
-Stay what the step will be
+* Create a new request for the missing player in your team
+* Close the created request
+* Accept or reject the applicants as candidate for the created request
+* Send a chat request to any accepted candidate
+* Apply an opened request as a candidate of a specific request
+* Send a chat request to any request owner, who accepted you as a candidate
 
 ```
 Give the example
