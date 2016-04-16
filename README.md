@@ -23,6 +23,12 @@ Android version 5.0 (Lollipop) or a newer version
 * Apply an opened request as a candidate of a specific request
 * Send a chat request to any request owner, who accepted you as a candidate
 
+## Screenshots
+
+![Splash Screem](http:/github.com/kaanburaksener/bench/screenshots/splash_screen.png)
+
+See more at [screenshots](http:/github.com/kaanburaksener/bench/screenshots/)
+
 ```
 Give the example
 ```
