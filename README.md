@@ -7,7 +7,7 @@ Bench is an android based mobile application that enables its users to find a mi
 
 To install the bench to your android phones:
 
-1. Download bench.apk file, which is located inside the apk folder, to your phones.
+1. Download bench.apk [bench.apk](https://github.com/kaanburaksener/bench/apk/bench.apk) file, which is located inside the apk folder, to your phones.
 2. Install the bench.apk file
 
 ## Requirements
